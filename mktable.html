@@ -1,0 +1,61 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module mktable</title>
+<style type="text/css"><!--
+TT { font-family: lucidatypewriter, lucida console, courier }
+--></style></head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>mktable</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/beni/python/traffic/mktable.py">/home/beni/python/traffic/mktable.py</a></font></td></tr></table>
+    <p><tt>Standalone&nbsp;tool&nbsp;to&nbsp;extract&nbsp;tables&nbsp;from&nbsp;logs.<br>
+&nbsp;<br>
+The&nbsp;logs&nbsp;are&nbsp;viewed&nbsp;as&nbsp;a&nbsp;multidimensional&nbsp;map&nbsp;from&nbsp;a&nbsp;tuple&nbsp;of&nbsp;strings&nbsp;to&nbsp;a<br>
+number.&nbsp;&nbsp;This&nbsp;is&nbsp;defined&nbsp;using&nbsp;pattern&nbsp;strings.<br>
+&nbsp;<br>
+Over&nbsp;each&nbsp;of&nbsp;the&nbsp;fields,&nbsp;you&nbsp;can&nbsp;specify&nbsp;a&nbsp;filter&nbsp;constraining&nbsp;the&nbsp;output&nbsp;only<br>
+to&nbsp;records&nbsp;with&nbsp;specific&nbsp;value(s)&nbsp;of&nbsp;this&nbsp;field.<br>
+&nbsp;<br>
+-&nbsp;Any&nbsp;field&nbsp;which&nbsp;has&nbsp;only&nbsp;one&nbsp;value&nbsp;in&nbsp;the&nbsp;final&nbsp;set&nbsp;(whether&nbsp;because&nbsp;of&nbsp;run<br>
+&nbsp;&nbsp;parameters&nbsp;or&nbsp;focusing),&nbsp;is&nbsp;listed&nbsp;once&nbsp;in&nbsp;the&nbsp;caption&nbsp;of&nbsp;the&nbsp;table,<br>
+&nbsp;&nbsp;reducing&nbsp;the&nbsp;dimensionality.<br>
+&nbsp;<br>
+Then,&nbsp;you&nbsp;can&nbsp;average&nbsp;over&nbsp;the&nbsp;values&nbsp;of&nbsp;some&nbsp;fields,&nbsp;again&nbsp;reducing&nbsp;the<br>
+dimensionality.</tt></p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="re.html">re</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt><a name="-average"><strong>average</strong></a>(d, *sets)</dt><dd><tt>Average&nbsp;over&nbsp;field&nbsp;i&nbsp;for&nbsp;each&nbsp;true&nbsp;sets[i],&nbsp;set&nbsp;field&nbsp;from&nbsp;sets[i].</tt></dd></dl>
+ <dl><dt><a name="-do_main"><strong>do_main</strong></a>()</dt><dd><tt>Generate&nbsp;the&nbsp;tables&nbsp;for&nbsp;the&nbsp;main&nbsp;part.</tt></dd></dl>
+ <dl><dt><a name="-do_react"><strong>do_react</strong></a>()</dt><dd><tt>Generate&nbsp;the&nbsp;table&nbsp;for&nbsp;the&nbsp;react&nbsp;part.</tt></dd></dl>
+ <dl><dt><a name="-limit"><strong>limit</strong></a>(d, *sets)</dt><dd><tt>For&nbsp;each&nbsp;true&nbsp;sets[i],&nbsp;limit&nbsp;keys&nbsp;from&nbsp;d&nbsp;to&nbsp;be&nbsp;in&nbsp;sets[i].</tt></dd></dl>
+ <dl><dt><a name="-parse_main"><strong>parse_main</strong></a>(fname)</dt><dd><tt>Return&nbsp;map&nbsp;from&nbsp;tuples&nbsp;to&nbsp;numbers&nbsp;from&nbsp;log&nbsp;of&nbsp;main&nbsp;run.</tt></dd></dl>
+ <dl><dt><a name="-parse_react"><strong>parse_react</strong></a>(fname)</dt><dd><tt>Return&nbsp;map&nbsp;from&nbsp;tuples&nbsp;to&nbsp;numbers&nbsp;from&nbsp;log&nbsp;of&nbsp;react&nbsp;run.</tt></dd></dl>
+ <dl><dt><a name="-reorder"><strong>reorder</strong></a>(d, order)</dt><dd><tt>Put&nbsp;key[order[i]]&nbsp;at&nbsp;place&nbsp;i.</tt></dd></dl>
+ <dl><dt><a name="-writetable"><strong>writetable</strong></a>(d, outfname)</dt><dd><tt>Write&nbsp;out&nbsp;LaTeX&nbsp;fragment&nbsp;with&nbsp;(possibly&nbsp;nested)&nbsp;table.</tt></dd></dl>
+</td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><strong>__file__</strong> = './mktable.py'<br>
+<strong>__name__</strong> = 'mktable'<br>
+<strong>division</strong> = _Feature((2, 2, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0), 8192)</td></tr></table>
+</body></html>

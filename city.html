@@ -1,0 +1,221 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module city</title>
+<style type="text/css"><!--
+TT { font-family: lucidatypewriter, lucida console, courier }
+--></style></head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>city</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/beni/python/traffic/city.py">/home/beni/python/traffic/city.py</a></font></td></tr></table>
+    <p><tt>Top&nbsp;module&nbsp;importing&nbsp;everything&nbsp;and&nbsp;handling&nbsp;whole&nbsp;cities.</tt></p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="basic.html">basic</a><br>
+<a href="connect.html">connect</a><br>
+</td><td width="25%" valign=top><a href="multi.html">multi</a><br>
+<a href="simtime.html">simtime</a><br>
+</td><td width="25%" valign=top><a href="textgrid.html">textgrid</a><br>
+<a href="utils.html">utils</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="city.html#City">City</a>
+</font></dt><dt><font face="helvetica, arial"><a href="city.html#GridPlan">GridPlan</a>
+</font></dt></dl>
+</dd>
+</dl>
+ 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="City">class <strong>City</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;city&nbsp;-&nbsp;one&nbsp;set&nbsp;of&nbsp;connected&nbsp;simulated&nbsp;objects&nbsp;with&nbsp;common&nbsp;simtime.<br>
+&nbsp;<br>
+You&nbsp;should&nbsp;create&nbsp;a&nbsp;city&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;and&nbsp;use&nbsp;its&nbsp;Car,&nbsp;Source,&nbsp;etc.<br>
+members&nbsp;to&nbsp;populate&nbsp;it...<br>
+&nbsp;<br>
+Change&nbsp;c.make_queue&nbsp;to&nbsp;control&nbsp;the&nbsp;queues&nbsp;used&nbsp;by&nbsp;MultiQueue&nbsp;objects<br>
+(default&nbsp;-&nbsp;self.<strong>StatQueue</strong>).<br>
+&nbsp;<br>
+It's&nbsp;convenient&nbsp;to&nbsp;generate&nbsp;cities&nbsp;from&nbsp;a&nbsp;plan&nbsp;and&nbsp;in&nbsp;such&nbsp;case&nbsp;extra<br>
+attributes&nbsp;of&nbsp;the&nbsp;city&nbsp;(.roads,&nbsp;.servers,&nbsp;.drains,&nbsp;etc.)&nbsp;will&nbsp;be&nbsp;set&nbsp;to<br>
+details&nbsp;about&nbsp;it.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="City-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Borrows&nbsp;all&nbsp;classes&nbsp;from&nbsp;basic&nbsp;&amp;&nbsp;mutli&nbsp;and&nbsp;wraps&nbsp;Timed&nbsp;ones.</tt></dd></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__doc__</strong> = 'A city - one set of connected simulated objects ... etc.) will be set to<font color="#c040c0">\n</font>    details about it.<font color="#c040c0">\n\n</font>    '</dl>
+
+<dl><dt><strong>__module__</strong> = 'city'</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'City' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="City-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#City-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="City-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#City-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="City-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#City-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="City-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="City-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#City-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="City-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#City-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="City-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#City-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#City-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="GridPlan">class <strong>GridPlan</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Plan&nbsp;of&nbsp;a&nbsp;city&nbsp;where&nbsp;junctions&nbsp;are&nbsp;located&nbsp;on&nbsp;a&nbsp;grid.<br>
+&nbsp;<br>
+Junctions&nbsp;are&nbsp;placed&nbsp;on&nbsp;integral&nbsp;coordinates&nbsp;starting&nbsp;from&nbsp;(0,&nbsp;0).&nbsp;&nbsp;They<br>
+have&nbsp;up&nbsp;to&nbsp;4&nbsp;roads&nbsp;going&nbsp;left,&nbsp;right,&nbsp;up&nbsp;and&nbsp;down.&nbsp;&nbsp;All&nbsp;roads&nbsp;are<br>
+bi-directional&nbsp;(i.e.&nbsp;represented&nbsp;by&nbsp;two&nbsp;`Road`s).&nbsp;&nbsp;For&nbsp;simplicity,&nbsp;all<br>
+roads&nbsp;are&nbsp;of&nbsp;length&nbsp;1&nbsp;and&nbsp;connect&nbsp;adjacent&nbsp;points.&nbsp;&nbsp;Longer&nbsp;roads&nbsp;are<br>
+simulated&nbsp;by&nbsp;passing&nbsp;through&nbsp;"forwarder"&nbsp;points&nbsp;(created&nbsp;with&nbsp;two<br>
+`Road(0)`&nbsp;elements).<br>
+&nbsp;<br>
+The&nbsp;plan&nbsp;can&nbsp;be&nbsp;implemented&nbsp;(i.e.&nbsp;city&nbsp;is&nbsp;created&nbsp;according&nbsp;to&nbsp;it).<br>
+&nbsp;<br>
+The&nbsp;`p.roads`&nbsp;attribute&nbsp;is&nbsp;a&nbsp;set&nbsp;of&nbsp;sorted&nbsp;pairs&nbsp;of&nbsp;end-point&nbsp;coordinates<br>
+to&nbsp;the&nbsp;roads.&nbsp;&nbsp;The&nbsp;`p.grid`&nbsp;attribute&nbsp;is&nbsp;a&nbsp;dictionary&nbsp;mapping&nbsp;from&nbsp;(x,&nbsp;y)<br>
+junction&nbsp;coordinates&nbsp;to&nbsp;sets&nbsp;of&nbsp;ports&nbsp;of&nbsp;each&nbsp;junction.<br>
+&nbsp;<br>
+The&nbsp;labels&nbsp;of&nbsp;ports&nbsp;are&nbsp;the&nbsp;directions&nbsp;going&nbsp;out&nbsp;of&nbsp;the&nbsp;junction,&nbsp;into&nbsp;the<br>
+roads&nbsp;(e.g.&nbsp;a&nbsp;right-going&nbsp;road&nbsp;begins&nbsp;with&nbsp;`(1,0)`&nbsp;and&nbsp;ends&nbsp;with<br>
+`(-1,&nbsp;0)`).<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="GridPlan-__init__"><strong>__init__</strong></a>(self, xsize, ysize)</dt></dl>
+
+<dl><dt><a name="GridPlan-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Return&nbsp;ascii-art&nbsp;diagram&nbsp;of&nbsp;the&nbsp;planned&nbsp;city.</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-add_road"><strong>add_road</strong></a>(self, p1, p2)</dt><dd><tt>Add&nbsp;a&nbsp;road&nbsp;between&nbsp;two&nbsp;points.</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-del_road"><strong>del_road</strong></a>(self, p1, p2)</dt><dd><tt>Remove&nbsp;a&nbsp;road&nbsp;between&nbsp;two&nbsp;points.</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-from_str"><strong>from_str</strong></a>(self, s)</dt><dd><tt>Initialize&nbsp;from&nbsp;ascii-art&nbsp;diagram.</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-full_plan"><strong>full_plan</strong></a>(self)</dt><dd><tt>Plans&nbsp;a&nbsp;full&nbsp;grid&nbsp;of&nbsp;given&nbsp;size.</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-implement"><strong>implement</strong></a>(self, city, source, drain, server, router)</dt><dd><tt>Create&nbsp;in&nbsp;`city`&nbsp;roads,&nbsp;sources,&nbsp;servers,&nbsp;etc.&nbsp;according&nbsp;to&nbsp;plan.<br>
+&nbsp;<br>
+`server(ports)`&nbsp;/&nbsp;`router(ports)`&nbsp;are&nbsp;called&nbsp;to&nbsp;create&nbsp;junctions&nbsp;with<br>
+3&nbsp;or&nbsp;4&nbsp;connections&nbsp;(the&nbsp;list&nbsp;of&nbsp;ports&nbsp;is&nbsp;provided&nbsp;in&nbsp;case&nbsp;they&nbsp;need&nbsp;it<br>
+but&nbsp;they&nbsp;need&nbsp;not&nbsp;do&nbsp;the&nbsp;`ports&nbsp;&gt;&nbsp;s`...).&nbsp;&nbsp;With&nbsp;2&nbsp;connections&nbsp;a&nbsp;pair<br>
+of&nbsp;road[0]&nbsp;forwarders&nbsp;is&nbsp;created&nbsp;to&nbsp;join&nbsp;the&nbsp;roads;&nbsp;with&nbsp;1&nbsp;connection<br>
+a&nbsp;`source()`&nbsp;/&nbsp;`drain()`&nbsp;pair&nbsp;is&nbsp;created&nbsp;and&nbsp;with&nbsp;zero&nbsp;connections<br>
+nothing&nbsp;is&nbsp;created.&nbsp;&nbsp;Note&nbsp;that&nbsp;you&nbsp;should&nbsp;use&nbsp;the&nbsp;city's&nbsp;wrapped<br>
+classes&nbsp;for&nbsp;the&nbsp;callable&nbsp;params.<br>
+&nbsp;<br>
+Various&nbsp;attributes&nbsp;(`c.sources`,&nbsp;etc.)&nbsp;are&nbsp;set&nbsp;on&nbsp;the&nbsp;city.</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-remove_perimeter"><strong>remove_perimeter</strong></a>(self)</dt><dd><tt>Remove&nbsp;roads&nbsp;on&nbsp;the&nbsp;very&nbsp;perimeter&nbsp;=&gt;&nbsp;guarantee&nbsp;sources/sinks.</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-sieve_roads"><strong>sieve_roads</strong></a>(self, prob)</dt><dd><tt>Removes&nbsp;each&nbsp;road&nbsp;with&nbsp;probability&nbsp;prob.</tt></dd></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__doc__</strong> = 'Plan of a city where junctions are located on a ... with `(1,0)` and ends with<font color="#c040c0">\n</font>    `(-1, 0)`).<font color="#c040c0">\n\n</font>    '</dl>
+
+<dl><dt><strong>__module__</strong> = 'city'</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'GridPlan' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="GridPlan-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#GridPlan-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#GridPlan-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#GridPlan-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#GridPlan-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="GridPlan-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#GridPlan-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#GridPlan-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt><a name="-city_queues"><strong>city_queues</strong></a>(city)</dt><dd><tt>Return&nbsp;mapping&nbsp;from&nbsp;((x,&nbsp;y),&nbsp;port)&nbsp;to&nbsp;queue&nbsp;(from&nbsp;city.servers).</tt></dd></dl>
+ <dl><dt><a name="-ir"><strong>ir</strong></a>(module_name)</dt><dd><tt>Import&nbsp;a&nbsp;module,&nbsp;reloading&nbsp;if&nbsp;already&nbsp;loaded.</tt></dd></dl>
+ <dl><dt><a name="-neg2"><strong>neg2</strong></a>((x, y))</dt><dd><tt>Negate&nbsp;a&nbsp;tuple&nbsp;element-wise.</tt></dd></dl>
+ <dl><dt><a name="-sort2"><strong>sort2</strong></a>(a, b)</dt><dd><tt>Return&nbsp;min(a,&nbsp;b),&nbsp;max(a,&nbsp;b).</tt></dd></dl>
+ <dl><dt><a name="-sub2"><strong>sub2</strong></a>((x1, y1), (x2, y2))</dt><dd><tt>Subtract&nbsp;2&nbsp;tuples&nbsp;element-wise.</tt></dd></dl>
+ <dl><dt><a name="-turn_probs"><strong>turn_probs</strong></a>(ccw_probs, ports<font color="#909090">=((1, 0), (0, 1), (-1, 0), (0, -1))</font>)</dt><dd><tt>Return&nbsp;turn&nbsp;probs&nbsp;mapping&nbsp;as&nbsp;RandomRouter&nbsp;wants&nbsp;them.<br>
+&nbsp;<br>
+`ccw_probs`&nbsp;maps&nbsp;from&nbsp;integers&nbsp;(0&nbsp;=&nbsp;straight,&nbsp;1&nbsp;=&nbsp;left,<br>
+2&nbsp;=&nbsp;-2&nbsp;=&nbsp;turnaround,&nbsp;3&nbsp;=&nbsp;-1&nbsp;=&nbsp;right)&nbsp;to&nbsp;rotation&nbsp;probabilities.<br>
+`ports`&nbsp;is&nbsp;the&nbsp;list&nbsp;of&nbsp;possible&nbsp;directions.</tt></dd></dl>
+ <dl><dt><a name="-uniload"><strong>uniload</strong></a>(probs)</dt><dd><tt>Return&nbsp;turning&nbsp;probs&nbsp;normalized&nbsp;for&nbsp;uniform&nbsp;load.<br>
+&nbsp;<br>
+For&nbsp;each&nbsp;target&nbsp;direction&nbsp;it&nbsp;normalizes&nbsp;the&nbsp;probabilities&nbsp;of&nbsp;turning&nbsp;to&nbsp;it<br>
+from&nbsp;all&nbsp;source&nbsp;directions&nbsp;to&nbsp;sum&nbsp;up&nbsp;to&nbsp;1.&nbsp;&nbsp;Thus,&nbsp;if&nbsp;the&nbsp;rates&nbsp;of&nbsp;cars<br>
+incoming&nbsp;from&nbsp;all&nbsp;directions&nbsp;are&nbsp;equal,&nbsp;the&nbsp;outcoming&nbsp;rates&nbsp;should&nbsp;be<br>
+equal&nbsp;too.</tt></dd></dl>
+</td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><strong>D</strong> = (0, -1)<br>
+<strong>DIRECTIONS</strong> = ((1, 0), (0, 1), (-1, 0), (0, -1))<br>
+<strong>L</strong> = (-1, 0)<br>
+<strong>R</strong> = (1, 0)<br>
+<strong>U</strong> = (0, 1)<br>
+<strong>__file__</strong> = './city.pyc'<br>
+<strong>__name__</strong> = 'city'<br>
+<strong>division</strong> = _Feature((2, 2, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0), 8192)</td></tr></table>
+</body></html>

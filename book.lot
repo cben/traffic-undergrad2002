@@ -1,0 +1,9 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Reaction test numerical results, averaged over 10\ensuremath {\times }10 \& 15\ensuremath {\times }15 cities.}}{23}
+\contentsline {table}{\numberline {3.2}{\ignorespaces Comparison of junctions with 3 and 4 roads, averaged over plans, selected parameters: \texttt {\textsl {hold2}}, \texttt {\textsl {fix}}, \texttt {\textsl {lru}}}}{25}
+\contentsline {table}{\numberline {3.3}{\ignorespaces Comparison of the 3 plans, selected parameters: \texttt {\textsl {hold2}}, \texttt {\textsl {fix}}, \texttt {\textsl {lru}}, \texttt {\textsl {3}} roads}}{26}
+\contentsline {table}{\numberline {3.4}{\ignorespaces Comparison of the 3 plans, selected parameters: \texttt {\textsl {hold2}}, \texttt {\textsl {fix}}, \texttt {\textsl {lru}}, \texttt {\textsl {4}} roads}}{27}
+\contentsline {table}{\numberline {3.5}{\ignorespaces Comparison of switching speeds, fixed and flexible, selected parameters: \texttt {\textsl {0.20}} load, \texttt {\textsl {lru}}, \texttt {\textsl {4}} roads, averaged over plans. Note that \texttt {\textsl {flex}} with \texttt {\textsl {blind}} makes no sense (it would be stuck on one queue indefinitely).}}{29}
+\contentsline {table}{\numberline {3.6}{\ignorespaces Comparison of control policies for different loads, selected parameters: \texttt {\textsl {fix}}, \texttt {\textsl {lru}}, \texttt {\textsl {4}} roads, averaged over plans.}}{31}

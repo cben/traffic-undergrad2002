@@ -1,0 +1,121 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module utils</title>
+<style type="text/css"><!--
+TT { font-family: lucidatypewriter, lucida console, courier }
+--></style></head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>utils</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/beni/python/traffic/utils.py">/home/beni/python/traffic/utils.py</a></font></td></tr></table>
+    <p><tt>Utility&nbsp;functions.</tt></p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="utils.html#Statistics">Statistics</a>
+</font></dt></dl>
+</dd>
+</dl>
+ 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Statistics">class <strong>Statistics</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Collector&nbsp;of&nbsp;values&nbsp;that&nbsp;tracks&nbsp;the&nbsp;mean,&nbsp;deviation,&nbsp;min&nbsp;and&nbsp;max.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Statistics-__float__"><strong>__float__</strong></a> = <a href="#Statistics-mean">mean</a>(self)</dt></dl>
+
+<dl><dt><a name="Statistics-__init__"><strong>__init__</strong></a>(self, *args)</dt><dd><tt>Clear&nbsp;and&nbsp;then&nbsp;submit&nbsp;given&nbsp;values/stats&nbsp;(if&nbsp;any).</tt></dd></dl>
+
+<dl><dt><a name="Statistics-__str__"><strong>__str__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Statistics-deviation"><strong>deviation</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Statistics-mean"><strong>mean</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Statistics-rms"><strong>rms</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Statistics-submit"><strong>submit</strong></a>(self, x)</dt><dd><tt>Add&nbsp;a&nbsp;single&nbsp;number&nbsp;or&nbsp;a&nbsp;whole&nbsp;stat&nbsp;<a href="__builtin__.html#object">object</a>.</tt></dd></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__doc__</strong> = 'Collector of values that tracks the mean, deviation, min and max.'</dl>
+
+<dl><dt><strong>__module__</strong> = 'utils'</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Statistics' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="Statistics-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Statistics-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Statistics-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#Statistics-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Statistics-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#Statistics-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="Statistics-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="Statistics-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#Statistics-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="Statistics-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Statistics-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#Statistics-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt><a name="-rand_select"><strong>rand_select</strong></a>(probs)</dt><dd><tt>Return&nbsp;key&nbsp;with&nbsp;probability&nbsp;probs[key]&nbsp;(normalised).<br>
+&nbsp;<br>
+If&nbsp;probs&nbsp;is&nbsp;a&nbsp;sequence,&nbsp;return&nbsp;one&nbsp;of&nbsp;range(len(probs)).</tt></dd></dl>
+ <dl><dt><a name="-smap"><strong>smap</strong></a>(spec, obj)</dt><dd><tt><a href="#-smap">smap</a>(spec,&nbsp;obj)&nbsp;-&nbsp;destructuring&nbsp;map;&nbsp;useful&nbsp;for&nbsp;debugging&nbsp;data&nbsp;structures...<br>
+&nbsp;<br>
+<a href="#-smap">smap</a>(func,&nbsp;obj)&nbsp;-&gt;&nbsp;func(obj)<br>
+<a href="#-smap">smap</a>([spec0,&nbsp;spec1,&nbsp;...],&nbsp;seq)&nbsp;-&gt;&nbsp;[<a href="#-smap">smap</a>(spec1,&nbsp;obj[0]),&nbsp;<a href="#-smap">smap</a>(spec1,&nbsp;obj[1]),&nbsp;...]<br>
+<a href="#-smap">smap</a>([spec],&nbsp;seq)&nbsp;-&gt;&nbsp;[<a href="#-smap">smap</a>(spec,&nbsp;obj[0]),&nbsp;<a href="#-smap">smap</a>(spec,&nbsp;obj[1]),&nbsp;...]<br>
+<a href="#-smap">smap</a>((...),&nbsp;seq)&nbsp;-&gt;&nbsp;tuple(<a href="#-smap">smap</a>(...,&nbsp;seq))<br>
+<a href="#-smap">smap</a>({kspec,&nbsp;vspec},&nbsp;{key0:&nbsp;val0,&nbsp;key1:&nbsp;val1,&nbsp;...})&nbsp;-&gt;<br>
+&nbsp;&nbsp;{<a href="#-smap">smap</a>(kspec,&nbsp;key0):&nbsp;<a href="#-smap">smap</a>(vspec,&nbsp;val0),&nbsp;...}</tt></dd></dl>
+</td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><strong>__file__</strong> = './utils.pyc'<br>
+<strong>__name__</strong> = 'utils'<br>
+<strong>division</strong> = _Feature((2, 2, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0), 8192)</td></tr></table>
+</body></html>

@@ -1,0 +1,485 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module connect</title>
+<style type="text/css"><!--
+TT { font-family: lucidatypewriter, lucida console, courier }
+--></style></head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>connect</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/beni/python/traffic/connect.py">/home/beni/python/traffic/connect.py</a></font></td></tr></table>
+    <p><tt>Convenience&nbsp;`elem&nbsp;|&nbsp;elem&nbsp;|&nbsp;elem&nbsp;...`&nbsp;systax&nbsp;(like&nbsp;shell&nbsp;pipes).<br>
+&nbsp;<br>
+Most&nbsp;elements&nbsp;of&nbsp;the&nbsp;model&nbsp;receive&nbsp;cars&nbsp;uncontrollably&nbsp;and&nbsp;inject&nbsp;cars&nbsp;into<br>
+their&nbsp;target&nbsp;element&nbsp;when&nbsp;they&nbsp;decide.&nbsp;&nbsp;The&nbsp;Queue&nbsp;|&nbsp;Server&nbsp;connection&nbsp;however<br>
+is&nbsp;reversed:&nbsp;the&nbsp;server&nbsp;decides&nbsp;when&nbsp;to&nbsp;pump&nbsp;from&nbsp;the&nbsp;queue.&nbsp;&nbsp;Every&nbsp;server<br>
+must&nbsp;be&nbsp;preceded&nbsp;by&nbsp;a&nbsp;queue.<br>
+&nbsp;<br>
+To&nbsp;support&nbsp;easy&nbsp;construction&nbsp;of&nbsp;more&nbsp;complex&nbsp;nets&nbsp;with&nbsp;multi-connection<br>
+elements,&nbsp;we&nbsp;provide&nbsp;an&nbsp;abstraction&nbsp;of&nbsp;a&nbsp;<a href="#Group">Group</a>:&nbsp;something&nbsp;with&nbsp;dictionaries&nbsp;of<br>
+named&nbsp;input&nbsp;ports&nbsp;and&nbsp;of&nbsp;named&nbsp;output&nbsp;ports.&nbsp;&nbsp;Any&nbsp;element&nbsp;is&nbsp;a&nbsp;group.<br>
+Connecting&nbsp;two&nbsp;groups&nbsp;with&nbsp;a&nbsp;pipe&nbsp;actually&nbsp;performs&nbsp;a&nbsp;linker&nbsp;operation:<br>
+matching&nbsp;port&nbsp;names&nbsp;from&nbsp;one's&nbsp;output&nbsp;dictionary&nbsp;and&nbsp;another's&nbsp;input<br>
+dictionary&nbsp;are&nbsp;physically&nbsp;connected&nbsp;and&nbsp;a&nbsp;new&nbsp;group&nbsp;with&nbsp;merged&nbsp;dictionaries<br>
+(minus&nbsp;the&nbsp;resolved&nbsp;names)&nbsp;is&nbsp;returned.&nbsp;&nbsp;Shortcut&nbsp;syntaxes&nbsp;of&nbsp;connecting&nbsp;a<br>
+group&nbsp;to&nbsp;lists,&nbsp;dicts,&nbsp;strings/nums&nbsp;for&nbsp;easily&nbsp;setting&nbsp;the&nbsp;names&nbsp;are<br>
+supported.<br>
+&nbsp;<br>
+None&nbsp;is&nbsp;the&nbsp;default&nbsp;name&nbsp;for&nbsp;one-input&nbsp;elements.&nbsp;&nbsp;Multi-input/output&nbsp;elements<br>
+have&nbsp;no&nbsp;default&nbsp;names&nbsp;until&nbsp;you&nbsp;set&nbsp;them&nbsp;with&nbsp;the&nbsp;`[name1,&nbsp;name2...]&nbsp;&gt;<br>
+<a href="#MultiQueue">MultiQueue</a>()`&nbsp;and&nbsp;`<a href="#MultiInject">MultiInject</a>()&nbsp;&gt;&nbsp;[name1,&nbsp;name2...]`&nbsp;syntaxes.&nbsp;&nbsp;Note&nbsp;that&nbsp;in<br>
+this&nbsp;case,&nbsp;unlike&nbsp;the&nbsp;`|`&nbsp;operator,&nbsp;no&nbsp;new&nbsp;group&nbsp;is&nbsp;created&nbsp;but&nbsp;the&nbsp;elements<br>
+themself&nbsp;are&nbsp;modified.&nbsp;&nbsp;They&nbsp;heavily&nbsp;rely&nbsp;on&nbsp;the&nbsp;names&nbsp;for&nbsp;refering&nbsp;to<br>
+inputs/outputs&nbsp;in&nbsp;all&nbsp;their&nbsp;paramaters...<br>
+&nbsp;<br>
+For&nbsp;example:<br>
+&gt;&gt;&gt;&nbsp;print&nbsp;('foo'&nbsp;|&nbsp;<a href="#Inject">Inject</a>()&nbsp;|&nbsp;'quux')&nbsp;|&nbsp;{'quux'&nbsp;:&nbsp;'bar'}&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;('bar'&nbsp;|&nbsp;<a href="#Element">Element</a>()&nbsp;|&nbsp;'baz')<br>
+&lt;<a href="#Group">Group</a>:&nbsp;['foo']&nbsp;-&gt;&nbsp;['baz']&gt;</tt></p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="connect.html#Group">Group</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="connect.html#Element">Element</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="connect.html#Inject">Inject</a>
+</font></dt><dt><font face="helvetica, arial"><a href="connect.html#MultiInject">MultiInject</a>
+</font></dt><dt><font face="helvetica, arial"><a href="connect.html#MultiQueue">MultiQueue</a>
+</font></dt><dt><font face="helvetica, arial"><a href="connect.html#Pump">Pump</a>
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+ 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Element">class <strong>Element</strong></a>(<a href="connect.html#Group">Group</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Element">Element</a>&nbsp;of&nbsp;single&nbsp;input&nbsp;and&nbsp;single&nbsp;output<br>
+&nbsp;<br>
+Initializes&nbsp;self.<strong>inputs</strong>&nbsp;and&nbsp;self.<strong>outputs</strong>&nbsp;to&nbsp;be&nbsp;{None:&nbsp;self}.<br>
+<a href="#Inject">Inject</a>&nbsp;and&nbsp;<a href="#Pump">Pump</a>&nbsp;subclass&nbsp;this&nbsp;only&nbsp;for&nbsp;convenience.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="connect.html#Element">Element</a></dd>
+<dd><a href="connect.html#Group">Group</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Element-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Element-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Return&nbsp;<a href="__builtin__.html#object">object</a>.<a href="#Element-__str__">__str__</a>(self)&nbsp;since&nbsp;<a href="#Group">Group</a>.__str__&nbsp;looks&nbsp;stupid.</tt></dd></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__doc__</strong> = 'Element of single input and single output<font color="#c040c0">\n\n</font>    I...nd Pump subclass this only for convenience.<font color="#c040c0">\n\n</font>    '</dl>
+
+<dl><dt><strong>__module__</strong> = 'connect'</dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Group">Group</a>:<br>
+<dl><dt><a name="Element-__add__"><strong>__add__</strong></a>(self, other)</dt><dd><tt><a href="#-merge">merge</a>(self,&nbsp;other)</tt></dd></dl>
+
+<dl><dt><a name="Element-__or__"><strong>__or__</strong></a>(self, target)</dt><dd><tt><a href="#-link">link</a>(self,&nbsp;target)</tt></dd></dl>
+
+<dl><dt><a name="Element-__ror__"><strong>__ror__</strong></a>(self, source)</dt><dd><tt><a href="#-link">link</a>(source,&nbsp;self)</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="connect.html#Group">Group</a>:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Group' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="Element-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Element-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Element-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#Element-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Element-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#Element-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="Element-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="Element-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#Element-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="Element-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Element-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#Element-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Group">class <strong>Group</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Something&nbsp;with&nbsp;dictionaries&nbsp;of&nbsp;input&nbsp;and&nbsp;ouput&nbsp;ports.<br>
+&nbsp;<br>
+The&nbsp;values&nbsp;in&nbsp;the&nbsp;self.<strong>intpus</strong>&nbsp;and&nbsp;self.<strong>outputs</strong>&nbsp;are&nbsp;actual&nbsp;<a href="#Inject">Inject</a>/<a href="#Pump">Pump</a><br>
+objects&nbsp;that&nbsp;process&nbsp;the&nbsp;|&nbsp;operator.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Group-__add__"><strong>__add__</strong></a>(self, other)</dt><dd><tt><a href="#-merge">merge</a>(self,&nbsp;other)</tt></dd></dl>
+
+<dl><dt><a name="Group-__init__"><strong>__init__</strong></a>(self, inputs<font color="#909090">={}</font>, outputs<font color="#909090">={}</font>)</dt></dl>
+
+<dl><dt><a name="Group-__or__"><strong>__or__</strong></a>(self, target)</dt><dd><tt><a href="#-link">link</a>(self,&nbsp;target)</tt></dd></dl>
+
+<dl><dt><a name="Group-__ror__"><strong>__ror__</strong></a>(self, source)</dt><dd><tt><a href="#-link">link</a>(source,&nbsp;self)</tt></dd></dl>
+
+<dl><dt><a name="Group-__str__"><strong>__str__</strong></a>(self)</dt></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__doc__</strong> = 'Something with dictionaries of input and ouput p...mp<font color="#c040c0">\n</font>    objects that process the | operator.<font color="#c040c0">\n\n</font>    '</dl>
+
+<dl><dt><strong>__module__</strong> = 'connect'</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Group' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="Group-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Group-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Group-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#Group-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Group-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#Group-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="Group-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="Group-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#Group-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="Group-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Group-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#Group-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Inject">class <strong>Inject</strong></a>(<a href="connect.html#Element">Element</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Element">Element</a>&nbsp;that&nbsp;injects&nbsp;cars&nbsp;into&nbsp;a&nbsp;target<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="connect.html#Inject">Inject</a></dd>
+<dd><a href="connect.html#Element">Element</a></dd>
+<dd><a href="connect.html#Group">Group</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Inject-connect"><strong>connect</strong></a>(self, target)</dt></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__doc__</strong> = 'Element that injects cars into a target'</dl>
+
+<dl><dt><strong>__module__</strong> = 'connect'</dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Element">Element</a>:<br>
+<dl><dt><a name="Inject-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Inject-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Return&nbsp;<a href="__builtin__.html#object">object</a>.<a href="#Inject-__str__">__str__</a>(self)&nbsp;since&nbsp;<a href="#Group">Group</a>.__str__&nbsp;looks&nbsp;stupid.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Group">Group</a>:<br>
+<dl><dt><a name="Inject-__add__"><strong>__add__</strong></a>(self, other)</dt><dd><tt><a href="#-merge">merge</a>(self,&nbsp;other)</tt></dd></dl>
+
+<dl><dt><a name="Inject-__or__"><strong>__or__</strong></a>(self, target)</dt><dd><tt><a href="#-link">link</a>(self,&nbsp;target)</tt></dd></dl>
+
+<dl><dt><a name="Inject-__ror__"><strong>__ror__</strong></a>(self, source)</dt><dd><tt><a href="#-link">link</a>(source,&nbsp;self)</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="connect.html#Group">Group</a>:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Group' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="Inject-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Inject-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Inject-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#Inject-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Inject-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#Inject-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="Inject-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="Inject-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#Inject-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="Inject-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Inject-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#Inject-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="MultiInject">class <strong>MultiInject</strong></a>(<a href="connect.html#Element">Element</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Sets&nbsp;self.<strong>injects</strong>&nbsp;to&nbsp;refer&nbsp;to&nbsp;created&nbsp;slave&nbsp;injects<br>
+&nbsp;<br>
+Note&nbsp;that&nbsp;this&nbsp;wins&nbsp;when&nbsp;also&nbsp;inheriting&nbsp;from&nbsp;<a href="#Inject">Inject</a>.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="connect.html#MultiInject">MultiInject</a></dd>
+<dd><a href="connect.html#Element">Element</a></dd>
+<dd><a href="connect.html#Group">Group</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="MultiInject-__gt__"><strong>__gt__</strong></a>(self, names)</dt><dd><tt>Creates&nbsp;injects&nbsp;and&nbsp;attaches&nbsp;them&nbsp;to&nbsp;output&nbsp;names;&nbsp;return&nbsp;self</tt></dd></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__doc__</strong> = 'Sets self.injects to refer to created slave inje...this wins when also inheriting from Inject.<font color="#c040c0">\n\n</font>    '</dl>
+
+<dl><dt><strong>__module__</strong> = 'connect'</dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Element">Element</a>:<br>
+<dl><dt><a name="MultiInject-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MultiInject-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Return&nbsp;<a href="__builtin__.html#object">object</a>.<a href="#MultiInject-__str__">__str__</a>(self)&nbsp;since&nbsp;<a href="#Group">Group</a>.__str__&nbsp;looks&nbsp;stupid.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Group">Group</a>:<br>
+<dl><dt><a name="MultiInject-__add__"><strong>__add__</strong></a>(self, other)</dt><dd><tt><a href="#-merge">merge</a>(self,&nbsp;other)</tt></dd></dl>
+
+<dl><dt><a name="MultiInject-__or__"><strong>__or__</strong></a>(self, target)</dt><dd><tt><a href="#-link">link</a>(self,&nbsp;target)</tt></dd></dl>
+
+<dl><dt><a name="MultiInject-__ror__"><strong>__ror__</strong></a>(self, source)</dt><dd><tt><a href="#-link">link</a>(source,&nbsp;self)</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="connect.html#Group">Group</a>:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Group' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="MultiInject-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#MultiInject-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="MultiInject-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#MultiInject-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="MultiInject-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#MultiInject-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="MultiInject-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="MultiInject-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#MultiInject-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="MultiInject-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#MultiInject-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#MultiInject-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="MultiQueue">class <strong>MultiQueue</strong></a>(<a href="connect.html#Element">Element</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Sets&nbsp;self.<strong>inputs</strong>&nbsp;to&nbsp;refer&nbsp;to&nbsp;created&nbsp;slave&nbsp;queues<br>
+&nbsp;<br>
+The&nbsp;queues&nbsp;are&nbsp;created&nbsp;by&nbsp;self.<strong>city</strong>.make_queue&nbsp;to&nbsp;allow&nbsp;selection.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;asymmetric&nbsp;to&nbsp;<a href="#MultiInject">MultiInject</a>&nbsp;in&nbsp;that&nbsp;it&nbsp;doesn't&nbsp;create&nbsp;pumps&nbsp;since<br>
+that&nbsp;would&nbsp;be&nbsp;redundant&nbsp;-&nbsp;every&nbsp;pump&nbsp;always&nbsp;needs&nbsp;an&nbsp;associated&nbsp;queue...<br>
+&nbsp;<br>
+Note&nbsp;that&nbsp;this&nbsp;wins&nbsp;when&nbsp;also&nbsp;inheriting&nbsp;from&nbsp;<a href="#Pump">Pump</a>.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="connect.html#MultiQueue">MultiQueue</a></dd>
+<dd><a href="connect.html#Element">Element</a></dd>
+<dd><a href="connect.html#Group">Group</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="MultiQueue-__lt__"><strong>__lt__</strong></a>(self, names)</dt><dd><tt>Creates&nbsp;queues&nbsp;and&nbsp;attaches&nbsp;them&nbsp;to&nbsp;input&nbsp;names;&nbsp;return&nbsp;self</tt></dd></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__doc__</strong> = 'Sets self.inputs to refer to created slave queue...t this wins when also inheriting from Pump.<font color="#c040c0">\n\n</font>    '</dl>
+
+<dl><dt><strong>__module__</strong> = 'connect'</dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Element">Element</a>:<br>
+<dl><dt><a name="MultiQueue-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="MultiQueue-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Return&nbsp;<a href="__builtin__.html#object">object</a>.<a href="#MultiQueue-__str__">__str__</a>(self)&nbsp;since&nbsp;<a href="#Group">Group</a>.__str__&nbsp;looks&nbsp;stupid.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Group">Group</a>:<br>
+<dl><dt><a name="MultiQueue-__add__"><strong>__add__</strong></a>(self, other)</dt><dd><tt><a href="#-merge">merge</a>(self,&nbsp;other)</tt></dd></dl>
+
+<dl><dt><a name="MultiQueue-__or__"><strong>__or__</strong></a>(self, target)</dt><dd><tt><a href="#-link">link</a>(self,&nbsp;target)</tt></dd></dl>
+
+<dl><dt><a name="MultiQueue-__ror__"><strong>__ror__</strong></a>(self, source)</dt><dd><tt><a href="#-link">link</a>(source,&nbsp;self)</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="connect.html#Group">Group</a>:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Group' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="MultiQueue-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#MultiQueue-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="MultiQueue-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#MultiQueue-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="MultiQueue-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#MultiQueue-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="MultiQueue-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="MultiQueue-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#MultiQueue-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="MultiQueue-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#MultiQueue-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#MultiQueue-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Pump">class <strong>Pump</strong></a>(<a href="connect.html#Element">Element</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Element">Element</a>&nbsp;that&nbsp;pumps&nbsp;cars&nbsp;from&nbsp;a&nbsp;source<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="connect.html#Pump">Pump</a></dd>
+<dd><a href="connect.html#Element">Element</a></dd>
+<dd><a href="connect.html#Group">Group</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Pump-rconnect"><strong>rconnect</strong></a>(self, queue)</dt></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__doc__</strong> = 'Element that pumps cars from a source'</dl>
+
+<dl><dt><strong>__module__</strong> = 'connect'</dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Element">Element</a>:<br>
+<dl><dt><a name="Pump-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Pump-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Return&nbsp;<a href="__builtin__.html#object">object</a>.<a href="#Pump-__str__">__str__</a>(self)&nbsp;since&nbsp;<a href="#Group">Group</a>.__str__&nbsp;looks&nbsp;stupid.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Group">Group</a>:<br>
+<dl><dt><a name="Pump-__add__"><strong>__add__</strong></a>(self, other)</dt><dd><tt><a href="#-merge">merge</a>(self,&nbsp;other)</tt></dd></dl>
+
+<dl><dt><a name="Pump-__or__"><strong>__or__</strong></a>(self, target)</dt><dd><tt><a href="#-link">link</a>(self,&nbsp;target)</tt></dd></dl>
+
+<dl><dt><a name="Pump-__ror__"><strong>__ror__</strong></a>(self, source)</dt><dd><tt><a href="#-link">link</a>(source,&nbsp;self)</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="connect.html#Group">Group</a>:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Group' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="Pump-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Pump-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Pump-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#Pump-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Pump-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#Pump-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="Pump-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="Pump-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#Pump-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="Pump-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Pump-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#Pump-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt><a name="-link"><strong>link</strong></a>(source, target)</dt><dd><tt>Link&nbsp;source.outputs&nbsp;against&nbsp;target.inputs&nbsp;procuding&nbsp;a&nbsp;merged&nbsp;group.<br>
+&nbsp;<br>
+The&nbsp;unmatched&nbsp;inner&nbsp;source.outputs&nbsp;and&nbsp;target.intputs&nbsp;are&nbsp;discarded&nbsp;(they<br>
+used&nbsp;to&nbsp;be&nbsp;merged&nbsp;but&nbsp;it&nbsp;was&nbsp;subtle,&nbsp;caused&nbsp;bugs&nbsp;and&nbsp;wasn't&nbsp;useful).&nbsp;&nbsp;The<br>
+group's&nbsp;ports&nbsp;are&nbsp;source.inputs&nbsp;and&nbsp;target.outputs.<br>
+&nbsp;<br>
+If&nbsp;one&nbsp;argument&nbsp;is&nbsp;a&nbsp;dictionary,&nbsp;it&nbsp;specifies&nbsp;a&nbsp;renaming&nbsp;of&nbsp;the<br>
+inputs/outputs&nbsp;of&nbsp;the&nbsp;other&nbsp;group.&nbsp;&nbsp;A&nbsp;list&nbsp;specifies&nbsp;renaming&nbsp;integers.&nbsp;&nbsp;A<br>
+string,&nbsp;int&nbsp;or&nbsp;tuple&nbsp;is&nbsp;specifies&nbsp;renaming&nbsp;None.<br>
+&nbsp;<br>
+The&nbsp;linking&nbsp;operation&nbsp;never&nbsp;modifies&nbsp;the&nbsp;port&nbsp;lists&nbsp;of&nbsp;the&nbsp;original&nbsp;groups<br>
+(it&nbsp;does&nbsp;trigger&nbsp;connections&nbsp;between&nbsp;the&nbsp;actual&nbsp;elements).</tt></dd></dl>
+ <dl><dt><a name="-merge"><strong>merge</strong></a>(*groups)</dt><dd><tt>Return&nbsp;merged&nbsp;group&nbsp;(no&nbsp;out-&gt;in&nbsp;linking)<br>
+&nbsp;<br>
+Assumes&nbsp;that&nbsp;input&nbsp;and&nbsp;output&nbsp;names&nbsp;don't&nbsp;collide.</tt></dd></dl>
+</td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><strong>__file__</strong> = './connect.pyc'<br>
+<strong>__name__</strong> = 'connect'</td></tr></table>
+</body></html>

@@ -1,0 +1,209 @@
+This is TeX, Version 3.14159 (Web2C 7.3.1) (format=latex 2002.11.21)  5 JAN 2003 23:03
+**\nonstopmode\input book.ltx
+(book.ltx (/usr/share/texmf/tex/latex/base/report.cls
+Document Class: report 2000/05/19 v1.4b Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/size12.clo
+File: size12.clo 2000/05/19 v1.4b Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf/tex/latex/tools/varioref.sty
+Package: varioref 2000/08/22 v1.2g package for extended references (FMi)
+\c@vrcnt=\count88
+)
+(/usr/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 1999/02/16 v1.0l Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texmf/tex/latex/config/graphics.cfg)
+Package graphics Info: Driver file: dvips.def on input line 80.
+
+(/usr/share/texmf/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+(/usr/share/texmf/tex/latex/misc/rotating.sty
+Package: rotating 1997/09/26, v2.13 Rotation package
+
+(/usr/share/texmf/tex/latex/base/ifthen.sty
+Package: ifthen 1999/09/10 v1.1b Standard LaTeX ifthen package (DPC)
+)
+\c@r@tfl@t=\count89
+\rot@float@box=\box26
+) (book.aux)
+\openout1 = `book.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 49.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 49.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 49.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 49.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 49.
+ [1
+
+]
+Overfull \hbox (5.67657pt too wide) in paragraph at lines 66--69
+[]\OT1/cmr/m/n/12 Also I want to thank Richard Stall-man, Li-nus Tor-valds, Gui
+do van Rossum,
+ []
+
+
+Overfull \hbox (1.0696pt too wide) in paragraph at lines 66--69
+\OT1/cmr/m/n/12 Don-ald Knuth, Les-ley Lam-port and all other peo-ple who cre-a
+ted GNU/Linux,
+ []
+
+[1
+
+] (book.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 2.
+)
+\tf@toc=\write3
+\openout3 = `book.toc'.
+
+ [2
+
+] (book.lot)
+\tf@lot=\write4
+\openout4 = `book.lot'.
+
+ [3
+
+] (book.lof)
+\tf@lof=\write5
+\openout5 = `book.lof'.
+
+ [4
+
+]
+Chapter 1.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 92.
+(/usr/share/texmf/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 92.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 101.
+
+Overfull \hbox (2.33258pt too wide) in paragraph at lines 108--118
+\OT1/cmr/m/n/12 A given junc-tion has $\OML/cmm/m/it/12 M$ \OT1/cmr/m/n/12 in-p
+ut roads and $\OML/cmm/m/it/12 N$ \OT1/cmr/m/n/12 out-put roads. There are $\OM
+L/cmm/m/it/12 R [] []  []MN$
+ []
+
+[5
+
+]
+Overfull \hbox (2.00658pt too wide) in paragraph at lines 135--144
+[]\OT1/cmr/m/n/12 Switching speed. In-stan-ta-neous switch-ing from serv-ing on
+e set of queues
+ []
+
+[6]
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 199.
+ [7] [8]
+Chapter 2.
+[9
+
+] [10]
+Overfull \hbox (2.93391pt too wide) in paragraph at lines 349--352
+\OT1/cmr/m/n/12 duce cars, \OT1/cmss/m/n/12 Drain\OT1/cmr/m/n/12 s that con-sum
+e them, \OT1/cmss/m/n/12 Road\OT1/cmr/m/n/12 , \OT1/cmss/m/n/12 Queue\OT1/cmr/m
+/n/12 s and sim-plest \OT1/cmss/m/n/12 Server\OT1/cmr/m/n/12 s. 
+ []
+
+[11] [12] [13]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <24.88> on input line 474.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <20.74> on input line 474.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <17.28> on input line 474.
+ [14] [15]
+Chapter 3.
+File: results/react_0.10-rand-car.ps Graphic file (type eps)
+<results/react_0.10-rand-car.ps>
+File: results/react_0.10-hold_rand-wait.ps Graphic file (type eps)
+ <results/react_0.10-hold_rand-wait.ps>
+File: results/react_0.10-hold_rand-dev.ps Graphic file (type eps)
+
+<results/react_0.10-hold_rand-dev.ps> [16
+
+] [17] [18] [19] [20] [21] (react.tex) Adding sideways figure on  right hand pa
+ge [22] [23] (main34.tex
+Overfull \hbox (45.54317pt too wide) in paragraph at lines 1--167
+ [] 
+ []
+
+) (mainplans3.tex
+Overfull \hbox (47.2183pt too wide) in paragraph at lines 1--197
+ [] 
+ []
+
+) (mainplans4.tex
+Overfull \hbox (53.09325pt too wide) in paragraph at lines 1--197
+ [] 
+ []
+
+) [24] [25] [26] [27] (mainflex.tex
+Overfull \hbox (103.70512pt too wide) in paragraph at lines 1--139
+ [] 
+ []
+
+) Adding sideways figure on  right hand page [28] [29] (mainwisdoms.tex
+Overfull \hbox (125.42157pt too wide) in paragraph at lines 1--205
+ [] 
+ []
+
+) Adding sideways figure on  right hand page [30] [31] [32] [33] (book.aux) ) 
+Here is how much of TeX's memory you used:
+ 884 strings out of 20887
+ 9821 string characters out of 197362
+ 91040 words of memory out of 350001
+ 3838 multiletter control sequences out of 10000+15000
+ 14024 words of font info for 50 fonts, out of 400000 for 1000
+ 14 hyphenation exceptions out of 10000
+ 25i,17n,23p,446b,619s stack positions out of 3000i,100n,1500p,50000b,4000s
+
+Output written on book.dvi (34 pages, 104160 bytes).

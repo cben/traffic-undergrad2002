@@ -1,0 +1,345 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module multi</title>
+<style type="text/css"><!--
+TT { font-family: lucidatypewriter, lucida console, courier }
+--></style></head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>multi</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/beni/python/traffic/multi.py">/home/beni/python/traffic/multi.py</a></font></td></tr></table>
+    <p><tt>Complex&nbsp;elements&nbsp;with&nbsp;many&nbsp;inputs&nbsp;and/or&nbsp;outputs</tt></p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="basic.html">basic</a><br>
+</td><td width="25%" valign=top><a href="utils.html">utils</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="connect.html#MultiInject">connect.MultiInject</a>(<a href="connect.html#Element">connect.Element</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="multi.html#Router">Router</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="multi.html#RandomRouter">RandomRouter</a>
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="connect.html#MultiQueue">connect.MultiQueue</a>(<a href="connect.html#Element">connect.Element</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="multi.html#SwitchedServer">SwitchedServer</a>(<a href="connect.html#MultiQueue">connect.MultiQueue</a>, <a href="basic.html#Server">basic.Server</a>)
+</font></dt></dl>
+</dd>
+<dt><font face="helvetica, arial"><a href="basic.html#Server">basic.Server</a>(<a href="simtime.html#Timed">simtime.Timed</a>, <a href="connect.html#Inject">connect.Inject</a>, <a href="connect.html#Pump">connect.Pump</a>)
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="multi.html#SwitchedServer">SwitchedServer</a>(<a href="connect.html#MultiQueue">connect.MultiQueue</a>, <a href="basic.html#Server">basic.Server</a>)
+</font></dt></dl>
+</dd>
+</dl>
+ 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="RandomRouter">class <strong>RandomRouter</strong></a>(<a href="multi.html#Router">Router</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Selects&nbsp;randomly&nbsp;with&nbsp;fixed&nbsp;probabilities&nbsp;(per&nbsp;source&nbsp;road).<br>
+&nbsp;<br>
+`turn_probs`&nbsp;should&nbsp;map&nbsp;from&nbsp;car.input_name&nbsp;(set&nbsp;by&nbsp;last&nbsp;multi_server)&nbsp;to<br>
+a&nbsp;map&nbsp;defining&nbsp;probability&nbsp;distribution&nbsp;over&nbsp;output&nbsp;names&nbsp;to&nbsp;turn&nbsp;probabilies.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="multi.html#RandomRouter">RandomRouter</a></dd>
+<dd><a href="multi.html#Router">Router</a></dd>
+<dd><a href="connect.html#MultiInject">connect.MultiInject</a></dd>
+<dd><a href="connect.html#Element">connect.Element</a></dd>
+<dd><a href="connect.html#Group">connect.Group</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="RandomRouter-__init__"><strong>__init__</strong></a>(self, turn_probs<font color="#909090">=None</font>)</dt></dl>
+
+<dl><dt><a name="RandomRouter-select"><strong>select</strong></a>(self, car)</dt></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__doc__</strong> = 'Selects randomly with fixed probabilities (per s...tion over output names to turn probabilies.<font color="#c040c0">\n\n</font>    '</dl>
+
+<dl><dt><strong>__module__</strong> = 'multi'</dl>
+
+<hr>
+Methods inherited from <a href="multi.html#Router">Router</a>:<br>
+<dl><dt><a name="RandomRouter-append"><strong>append</strong></a>(self, car)</dt></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#MultiInject">connect.MultiInject</a>:<br>
+<dl><dt><a name="RandomRouter-__gt__"><strong>__gt__</strong></a>(self, names)</dt><dd><tt>Creates&nbsp;injects&nbsp;and&nbsp;attaches&nbsp;them&nbsp;to&nbsp;output&nbsp;names;&nbsp;return&nbsp;self</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Element">connect.Element</a>:<br>
+<dl><dt><a name="RandomRouter-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Return&nbsp;object.<a href="#RandomRouter-__str__">__str__</a>(self)&nbsp;since&nbsp;Group.__str__&nbsp;looks&nbsp;stupid.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Group">connect.Group</a>:<br>
+<dl><dt><a name="RandomRouter-__add__"><strong>__add__</strong></a>(self, other)</dt><dd><tt>merge(self,&nbsp;other)</tt></dd></dl>
+
+<dl><dt><a name="RandomRouter-__or__"><strong>__or__</strong></a>(self, target)</dt><dd><tt>link(self,&nbsp;target)</tt></dd></dl>
+
+<dl><dt><a name="RandomRouter-__ror__"><strong>__ror__</strong></a>(self, source)</dt><dd><tt>link(source,&nbsp;self)</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="connect.html#Group">connect.Group</a>:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Group' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="RandomRouter-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#RandomRouter-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="RandomRouter-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#RandomRouter-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="RandomRouter-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#RandomRouter-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="RandomRouter-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="RandomRouter-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#RandomRouter-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="RandomRouter-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#RandomRouter-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;object's&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#RandomRouter-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Router">class <strong>Router</strong></a>(<a href="connect.html#MultiInject">connect.MultiInject</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Forwards&nbsp;each&nbsp;incoming&nbsp;car&nbsp;into&nbsp;one&nbsp;of&nbsp;several&nbsp;destinations.<br>
+&nbsp;<br>
+Which&nbsp;one&nbsp;is&nbsp;served&nbsp;is&nbsp;determined&nbsp;by&nbsp;calling&nbsp;select(car)&nbsp;that&nbsp;should<br>
+be&nbsp;implemented&nbsp;in&nbsp;a&nbsp;subclass&nbsp;and&nbsp;return&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;queue&nbsp;to&nbsp;serve.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="multi.html#Router">Router</a></dd>
+<dd><a href="connect.html#MultiInject">connect.MultiInject</a></dd>
+<dd><a href="connect.html#Element">connect.Element</a></dd>
+<dd><a href="connect.html#Group">connect.Group</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Router-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Router-append"><strong>append</strong></a>(self, car)</dt></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__doc__</strong> = 'Forwards each incoming car into one of several d... and return the name of the queue to serve.<font color="#c040c0">\n\n</font>    '</dl>
+
+<dl><dt><strong>__module__</strong> = 'multi'</dl>
+
+<hr>
+Methods inherited from <a href="connect.html#MultiInject">connect.MultiInject</a>:<br>
+<dl><dt><a name="Router-__gt__"><strong>__gt__</strong></a>(self, names)</dt><dd><tt>Creates&nbsp;injects&nbsp;and&nbsp;attaches&nbsp;them&nbsp;to&nbsp;output&nbsp;names;&nbsp;return&nbsp;self</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Element">connect.Element</a>:<br>
+<dl><dt><a name="Router-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Return&nbsp;object.<a href="#Router-__str__">__str__</a>(self)&nbsp;since&nbsp;Group.__str__&nbsp;looks&nbsp;stupid.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Group">connect.Group</a>:<br>
+<dl><dt><a name="Router-__add__"><strong>__add__</strong></a>(self, other)</dt><dd><tt>merge(self,&nbsp;other)</tt></dd></dl>
+
+<dl><dt><a name="Router-__or__"><strong>__or__</strong></a>(self, target)</dt><dd><tt>link(self,&nbsp;target)</tt></dd></dl>
+
+<dl><dt><a name="Router-__ror__"><strong>__ror__</strong></a>(self, source)</dt><dd><tt>link(source,&nbsp;self)</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="connect.html#Group">connect.Group</a>:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Group' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="Router-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Router-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Router-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#Router-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Router-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#Router-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="Router-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="Router-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#Router-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="Router-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Router-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;object's&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#Router-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table> 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SwitchedServer">class <strong>SwitchedServer</strong></a>(<a href="connect.html#MultiQueue">connect.MultiQueue</a>, <a href="basic.html#Server">basic.Server</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Serves&nbsp;one&nbsp;of&nbsp;several&nbsp;queues&nbsp;each&nbsp;tick.<br>
+&nbsp;<br>
+Which&nbsp;one&nbsp;is&nbsp;served&nbsp;is&nbsp;determined&nbsp;by&nbsp;calling&nbsp;a&nbsp;chain&nbsp;of&nbsp;"filter"&nbsp;functions<br>
+until&nbsp;at&nbsp;most&nbsp;one&nbsp;name&nbsp;remain.&nbsp;&nbsp;Each&nbsp;function&nbsp;is&nbsp;passed&nbsp;the&nbsp;<a href="#SwitchedServer">SwitchedServer</a><br>
+object&nbsp;and&nbsp;a&nbsp;list&nbsp;of&nbsp;queue&nbsp;port&nbsp;names&nbsp;and&nbsp;should&nbsp;return&nbsp;new&nbsp;(possibly<br>
+empty)&nbsp;set&nbsp;of&nbsp;names&nbsp;(usually&nbsp;a&nbsp;subset&nbsp;of&nbsp;it).&nbsp;&nbsp;Specifying&nbsp;a&nbsp;tuple&nbsp;of<br>
+function,&nbsp;args&nbsp;and&nbsp;possibly&nbsp;keyword&nbsp;args&nbsp;allows&nbsp;to&nbsp;give&nbsp;it&nbsp;additional<br>
+args.&nbsp;&nbsp;At&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;chain,&nbsp;no&nbsp;more&nbsp;than&nbsp;one&nbsp;name&nbsp;should&nbsp;remain.<br>
+&nbsp;<br>
+The&nbsp;served&nbsp;queue&nbsp;name&nbsp;(if&nbsp;any)&nbsp;is&nbsp;stored&nbsp;in&nbsp;`self.<strong>last_name</strong>`.&nbsp;&nbsp;When&nbsp;the<br>
+choice&nbsp;changes,&nbsp;serving&nbsp;is&nbsp;suspended&nbsp;by&nbsp;`yellow`&nbsp;cycles.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="multi.html#SwitchedServer">SwitchedServer</a></dd>
+<dd><a href="connect.html#MultiQueue">connect.MultiQueue</a></dd>
+<dd><a href="basic.html#Server">basic.Server</a></dd>
+<dd><a href="simtime.html#Timed">simtime.Timed</a></dd>
+<dd><a href="connect.html#Inject">connect.Inject</a></dd>
+<dd><a href="connect.html#Pump">connect.Pump</a></dd>
+<dd><a href="connect.html#Element">connect.Element</a></dd>
+<dd><a href="connect.html#Group">connect.Group</a></dd>
+<dd><a href="__builtin__.html#object">__builtin__.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="SwitchedServer-__init__"><strong>__init__</strong></a>(self, filter_chain, yellow<font color="#909090">=0</font>)</dt><dd><tt>Set&nbsp;the&nbsp;chain&nbsp;to&nbsp;be&nbsp;`filter_chain`.</tt></dd></dl>
+
+<dl><dt><a name="SwitchedServer-tick"><strong>tick</strong></a>(self)</dt></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__doc__</strong> = 'Serves one of several queues each tick.<font color="#c040c0">\n</font>    <font color="#c040c0">\n</font>   ...erving is suspended by `yellow` cycles.<font color="#c040c0">\n</font>    <font color="#c040c0">\n</font>    '</dl>
+
+<dl><dt><strong>__module__</strong> = 'multi'</dl>
+
+<hr>
+Methods inherited from <a href="connect.html#MultiQueue">connect.MultiQueue</a>:<br>
+<dl><dt><a name="SwitchedServer-__lt__"><strong>__lt__</strong></a>(self, names)</dt><dd><tt>Creates&nbsp;queues&nbsp;and&nbsp;attaches&nbsp;them&nbsp;to&nbsp;input&nbsp;names;&nbsp;return&nbsp;self</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="simtime.html#Timed">simtime.Timed</a>:<br>
+<dl><dt><a name="SwitchedServer-retire"><strong>retire</strong></a>(self)</dt><dd><tt>Unregister&nbsp;from&nbsp;simtime&nbsp;to&nbsp;allow&nbsp;recycling</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="simtime.html#Timed">simtime.Timed</a>:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Timed' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Inject">connect.Inject</a>:<br>
+<dl><dt><a name="SwitchedServer-connect"><strong>connect</strong></a>(self, target)</dt></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Pump">connect.Pump</a>:<br>
+<dl><dt><a name="SwitchedServer-rconnect"><strong>rconnect</strong></a>(self, queue)</dt></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Element">connect.Element</a>:<br>
+<dl><dt><a name="SwitchedServer-__str__"><strong>__str__</strong></a>(self)</dt><dd><tt>Return&nbsp;object.<a href="#SwitchedServer-__str__">__str__</a>(self)&nbsp;since&nbsp;Group.__str__&nbsp;looks&nbsp;stupid.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="connect.html#Group">connect.Group</a>:<br>
+<dl><dt><a name="SwitchedServer-__add__"><strong>__add__</strong></a>(self, other)</dt><dd><tt>merge(self,&nbsp;other)</tt></dd></dl>
+
+<dl><dt><a name="SwitchedServer-__or__"><strong>__or__</strong></a>(self, target)</dt><dd><tt>link(self,&nbsp;target)</tt></dd></dl>
+
+<dl><dt><a name="SwitchedServer-__ror__"><strong>__ror__</strong></a>(self, source)</dt><dd><tt>link(source,&nbsp;self)</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="SwitchedServer-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#SwitchedServer-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="SwitchedServer-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#SwitchedServer-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="SwitchedServer-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#SwitchedServer-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="SwitchedServer-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="SwitchedServer-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#SwitchedServer-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="SwitchedServer-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#SwitchedServer-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;object's&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#SwitchedServer-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;object&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt><a name="-attempt_hold_filter"><strong>attempt_hold_filter</strong></a>(serv, names)</dt><dd><tt>Choose&nbsp;`serv.last_name`&nbsp;if&nbsp;it&nbsp;is&nbsp;in&nbsp;names.<br>
+&nbsp;<br>
+Also,&nbsp;if&nbsp;suceesful,&nbsp;prolong&nbsp;`hold_filter`'s&nbsp;countdown&nbsp;(if&nbsp;one&nbsp;is&nbsp;used).</tt></dd></dl>
+ <dl><dt><a name="-hold_filter"><strong>hold_filter</strong></a>(serv, names, cycles)</dt><dd><tt>Allow&nbsp;changes&nbsp;exactly&nbsp;once&nbsp;in&nbsp;`cycles`&nbsp;cycles.<br>
+&nbsp;<br>
+Once&nbsp;in&nbsp;N&nbsp;cycles&nbsp;it&nbsp;will&nbsp;let&nbsp;names&nbsp;through&nbsp;and&nbsp;the&nbsp;following&nbsp;filters&nbsp;will<br>
+actually&nbsp;decide.&nbsp;&nbsp;Rest&nbsp;of&nbsp;the&nbsp;time&nbsp;it&nbsp;will&nbsp;return&nbsp;the&nbsp;last&nbsp;name,&nbsp;ignoring<br>
+the&nbsp;ones&nbsp;it&nbsp;got.<br>
+&nbsp;<br>
+Put&nbsp;this&nbsp;before&nbsp;everything.&nbsp;&nbsp;You&nbsp;can&nbsp;only&nbsp;use&nbsp;one&nbsp;such&nbsp;filter&nbsp;in&nbsp;a&nbsp;server.</tt></dd></dl>
+ <dl><dt><a name="-inorder_filter"><strong>inorder_filter</strong></a>(serv, names)</dt><dd><tt>Select&nbsp;the&nbsp;car(s)&nbsp;waiting&nbsp;the&nbsp;most.<br>
+&nbsp;<br>
+Requires&nbsp;some&nbsp;StatQueue&nbsp;to&nbsp;be&nbsp;used.</tt></dd></dl>
+ <dl><dt><a name="-last_emptying_filter"><strong>last_emptying_filter</strong></a>(serv, names, window<font color="#909090">=10</font>)</dt><dd><tt>Select&nbsp;the&nbsp;queue&nbsp;predicted&nbsp;to&nbsp;become&nbsp;empty&nbsp;last&nbsp;(len/(1-load)).<br>
+&nbsp;<br>
+Requires&nbsp;some&nbsp;LoadStatQueue&nbsp;to&nbsp;be&nbsp;used.</tt></dd></dl>
+ <dl><dt><a name="-longest_queue_filter"><strong>longest_queue_filter</strong></a>(serv, names)</dt><dd><tt>Select&nbsp;the&nbsp;longest&nbsp;queue(s)</tt></dd></dl>
+ <dl><dt><a name="-lru_filter"><strong>lru_filter</strong></a>(serv, names)</dt><dd><tt>Select&nbsp;one&nbsp;in&nbsp;least-recently-used&nbsp;manner.<br>
+&nbsp;<br>
+For&nbsp;stable&nbsp;names&nbsp;list,&nbsp;results&nbsp;in&nbsp;round-robin&nbsp;behaviour.<br>
+You&nbsp;can&nbsp;only&nbsp;use&nbsp;one&nbsp;such&nbsp;filter&nbsp;in&nbsp;a&nbsp;server.</tt></dd></dl>
+ <dl><dt><a name="-nonempty_filter"><strong>nonempty_filter</strong></a>(serv, names)</dt><dd><tt>Filter&nbsp;out&nbsp;empty&nbsp;queues.</tt></dd></dl>
+ <dl><dt><a name="-optimal_blind_probs"><strong>optimal_blind_probs</strong></a>(source_probs)</dt></dl>
+ <dl><dt><a name="-rand_filter"><strong>rand_filter</strong></a>(serv, names, probs<font color="#909090">=None</font>)</dt><dd><tt>Select&nbsp;randomly&nbsp;with&nbsp;fixed&nbsp;probabilities.</tt></dd></dl>
+</td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><strong>__file__</strong> = './multi.pyc'<br>
+<strong>__name__</strong> = 'multi'<br>
+<strong>division</strong> = _Feature((2, 2, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0), 8192)<br>
+<strong>phases</strong> = [&lt;class 'basic.Source'&gt;, &lt;class 'basic.Road'&gt;, &lt;class 'basic.Server'&gt;, &lt;class 'basic.Queue'&gt;, &lt;class 'basic.Car'&gt;, &lt;class 'basic.Drain'&gt;]</td></tr></table>
+</body></html>

@@ -1,0 +1,165 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module run</title>
+<style type="text/css"><!--
+TT { font-family: lucidatypewriter, lucida console, courier }
+--></style></head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>run</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/beni/python/traffic/run.py">/home/beni/python/traffic/run.py</a></font></td></tr></table>
+    <p><tt>Run&nbsp;the&nbsp;simulation.&nbsp;&nbsp;Quick&nbsp;and&nbsp;dirty&nbsp;style,&nbsp;compared&nbsp;to&nbsp;other&nbsp;modules...</tt></p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#fffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="basic.html">basic</a><br>
+<a href="connect.html">connect</a><br>
+<a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="multi.html">multi</a><br>
+<a href="os.html">os</a><br>
+<a href="random.html">random</a><br>
+</td><td width="25%" valign=top><a href="simtime.html">simtime</a><br>
+<a href="sys.html">sys</a><br>
+<a href="textgrid.html">textgrid</a><br>
+</td><td width="25%" valign=top><a href="utils.html">utils</a><br>
+</td></tr></table></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="run.html#Log">Log</a>
+</font></dt></dl>
+</dd>
+</dl>
+ 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Log">class <strong>Log</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>File-like&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;writing&nbsp;to&nbsp;both&nbsp;stdout&nbsp;and&nbsp;a&nbsp;log&nbsp;file.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Log-__init__"><strong>__init__</strong></a>(self, fname<font color="#909090">='log'</font>)</dt><dd><tt>Open&nbsp;log&nbsp;file&nbsp;`fname`.log;&nbsp;read&nbsp;old&nbsp;headers&nbsp;into&nbsp;self.<strong>done</strong>.</tt></dd></dl>
+
+<dl><dt><a name="Log-close"><strong>close</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="Log-write"><strong>write</strong></a>(self, s)</dt></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__doc__</strong> = 'File-like object writing to both stdout and a log file.'</dl>
+
+<dl><dt><strong>__module__</strong> = 'run'</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Log' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="Log-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Log-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Log-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#Log-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Log-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#Log-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="Log-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="Log-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#Log-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="Log-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Log-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="Log-__str__"><strong>__str__</strong></a>(...)</dt><dd><tt>x.<a href="#Log-__str__">__str__</a>()&nbsp;&lt;==&gt;&nbsp;str(x)</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#Log-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt><a name="-all_main"><strong>all_main</strong></a>()</dt><dd><tt>Run&nbsp;reaction&nbsp;tests.</tt></dd></dl>
+ <dl><dt><a name="-all_react"><strong>all_react</strong></a>()</dt><dd><tt>Run&nbsp;reaction&nbsp;tests.</tt></dd></dl>
+ <dl><dt><a name="-header"><strong>header</strong></a>(s)</dt><dd><tt>Return&nbsp;decorated&nbsp;string.</tt></dd></dl>
+ <dl><dt><a name="-implement"><strong>implement</strong></a>(plan, load<font color="#909090">=0.20000000000000001</font>, turns<font color="#909090">={-1: 20, 0: 60, 1: 15, 2: 5}</font>, use_uniload<font color="#909090">=1</font>, filters<font color="#909090">=[&lt;function rand_filter&gt;]</font>, statqueue<font color="#909090">=0</font>)</dt><dd><tt>Simple&nbsp;specification.<br>
+&nbsp;<br>
+-&nbsp;`statqueue`&nbsp;can&nbsp;be&nbsp;0&nbsp;(plain),&nbsp;positive&nbsp;integer&nbsp;(giving&nbsp;LoadHistQueue<br>
+&nbsp;&nbsp;history&nbsp;length)&nbsp;or&nbsp;negative&nbsp;integer&nbsp;(giving&nbsp;LoadExpQueue&nbsp;characteristic<br>
+&nbsp;&nbsp;decay&nbsp;length).</tt></dd></dl>
+ <dl><dt><a name="-outname"><strong>outname</strong></a>(fname)</dt><dd><tt>Return&nbsp;file&nbsp;name&nbsp;in&nbsp;output&nbsp;directory.</tt></dd></dl>
+ <dl><dt><a name="-plot"><strong>plot</strong></a>(sets, fname<font color="#909090">='plot'</font>)</dt><dd><tt>Plot&nbsp;into&nbsp;`fname`.ps&nbsp;the&nbsp;given&nbsp;lists&nbsp;(as&nbsp;function&nbsp;of&nbsp;index).<br>
+&nbsp;<br>
+`sets`&nbsp;is&nbsp;a&nbsp;list&nbsp;of&nbsp;pairs&nbsp;(setname,&nbsp;list)&nbsp;to&nbsp;plot.&nbsp;&nbsp;setname.dat&nbsp;and&nbsp;fname.plt<br>
+files&nbsp;are&nbsp;produced.</tt></dd></dl>
+ <dl><dt><a name="-run_main"><strong>run_main</strong></a>(plan, **params)</dt><dd><tt>Return&nbsp;tuple&nbsp;of&nbsp;(waited_total,&nbsp;waited3,&nbsp;waited4)&nbsp;statistics.<br>
+&nbsp;<br>
+The&nbsp;last&nbsp;two&nbsp;are&nbsp;separate&nbsp;stats&nbsp;over&nbsp;junctions&nbsp;with&nbsp;3&nbsp;and&nbsp;4&nbsp;roads.</tt></dd></dl>
+ <dl><dt><a name="-run_react"><strong>run_react</strong></a>(plan, **params)</dt><dd><tt>Return&nbsp;3&nbsp;history&nbsp;lists&nbsp;and&nbsp;last&nbsp;statistics&nbsp;for&nbsp;sources&nbsp;turned&nbsp;on/off.<br>
+&nbsp;<br>
+First&nbsp;list&nbsp;tracks&nbsp;number&nbsp;of&nbsp;cars,&nbsp;the&nbsp;second&nbsp;tracks&nbsp;the&nbsp;average&nbsp;waiting<br>
+time&nbsp;(over&nbsp;all&nbsp;queues&nbsp;in&nbsp;the&nbsp;city)&nbsp;and&nbsp;the&nbsp;third&nbsp;-&nbsp;the&nbsp;deviation&nbsp;in&nbsp;the<br>
+waiting&nbsp;time.</tt></dd></dl>
+</td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><strong>D</strong> = (0, -1)<br>
+<strong>DIRECTIONS</strong> = ((1, 0), (0, 1), (-1, 0), (0, -1))<br>
+<strong>L</strong> = (-1, 0)<br>
+<strong>R</strong> = (1, 0)<br>
+<strong>U</strong> = (0, 1)<br>
+<strong>__file__</strong> = './run.pyc'<br>
+<strong>__name__</strong> = 'run'<br>
+<strong>division</strong> = _Feature((2, 2, 0, 'alpha', 2), (3, 0, 0, 'alpha', 0), 8192)<br>
+<strong>f</strong> = &lt;closed file 'results4/B.plan', mode 'r'&gt;<br>
+<strong>filters</strong> = [&lt;function longest_queue_filter&gt;, &lt;function rand_filter&gt;]<br>
+<strong>flex</strong> = []<br>
+<strong>flexname</strong> = 'fix'<br>
+<strong>fname</strong> = 'results4/B.plan'<br>
+<strong>hold</strong> = [(&lt;function hold_filter&gt;, [8])]<br>
+<strong>holdname</strong> = 'hold8'<br>
+<strong>i</strong> = 2<br>
+<strong>main_loads</strong> = [0.14999999999999999, 0.20000000000000001, 0.23000000000000001]<br>
+<strong>main_plans</strong> = {'A': &lt;city.GridPlan object&gt;, 'B': &lt;city.GridPlan object&gt;, 'C': &lt;city.GridPlan object&gt;}<br>
+<strong>main_policies</strong> = {'free_fix_blind_lru': [&lt;function lru_filter&gt;], 'free_fix_blind_rand': [&lt;function rand_filter&gt;], 'free_fix_hist_lru': [&lt;function nonempty_filter&gt;, &lt;function last_emptying_filter&gt;, &lt;function lru_filter&gt;], 'free_fix_hist_rand': [&lt;function nonempty_filter&gt;, &lt;function last_emptying_filter&gt;, &lt;function rand_filter&gt;], 'free_fix_inorder_lru': [&lt;function nonempty_filter&gt;, &lt;function inorder_filter&gt;, &lt;function lru_filter&gt;], 'free_fix_inorder_rand': [&lt;function nonempty_filter&gt;, &lt;function inorder_filter&gt;, &lt;function rand_filter&gt;], 'free_fix_longest_lru': [&lt;function nonempty_filter&gt;, &lt;function longest_queue_filter&gt;, &lt;function lru_filter&gt;], 'free_fix_longest_rand': [&lt;function nonempty_filter&gt;, &lt;function longest_queue_filter&gt;, &lt;function rand_filter&gt;], 'free_fix_nonempty_lru': [&lt;function nonempty_filter&gt;, &lt;function lru_filter&gt;], 'free_fix_nonempty_rand': [&lt;function nonempty_filter&gt;, &lt;function rand_filter&gt;], ...}<br>
+<strong>n</strong> = 'B'<br>
+<strong>name</strong> = 'longest'<br>
+<strong>nonempty</strong> = [&lt;function nonempty_filter&gt;]<br>
+<strong>outdir</strong> = 'results4'<br>
+<strong>p</strong> = &lt;city.GridPlan object&gt;<br>
+<strong>phases</strong> = [&lt;class 'basic.Source'&gt;, &lt;class 'basic.Road'&gt;, &lt;class 'basic.Server'&gt;, &lt;class 'basic.Queue'&gt;, &lt;class 'basic.Car'&gt;, &lt;class 'basic.Drain'&gt;]<br>
+<strong>plans</strong> = {'A': &lt;city.GridPlan object&gt;, 'B': &lt;city.GridPlan object&gt;, 'C': &lt;city.GridPlan object&gt;}<br>
+<strong>policies</strong> = {'free_fix_blind_lru': [&lt;function lru_filter&gt;], 'free_fix_blind_rand': [&lt;function rand_filter&gt;], 'free_fix_hist_lru': [&lt;function nonempty_filter&gt;, &lt;function last_emptying_filter&gt;, &lt;function lru_filter&gt;], 'free_fix_hist_rand': [&lt;function nonempty_filter&gt;, &lt;function last_emptying_filter&gt;, &lt;function rand_filter&gt;], 'free_fix_inorder_lru': [&lt;function nonempty_filter&gt;, &lt;function inorder_filter&gt;, &lt;function lru_filter&gt;], 'free_fix_inorder_rand': [&lt;function nonempty_filter&gt;, &lt;function inorder_filter&gt;, &lt;function rand_filter&gt;], 'free_fix_longest_lru': [&lt;function nonempty_filter&gt;, &lt;function longest_queue_filter&gt;, &lt;function lru_filter&gt;], 'free_fix_longest_rand': [&lt;function nonempty_filter&gt;, &lt;function longest_queue_filter&gt;, &lt;function rand_filter&gt;], 'free_fix_nonempty_lru': [&lt;function nonempty_filter&gt;, &lt;function lru_filter&gt;], 'free_fix_nonempty_rand': [&lt;function nonempty_filter&gt;, &lt;function rand_filter&gt;], ...}<br>
+<strong>react_loads</strong> = [0.050000000000000003, 0.10000000000000001, 0.20000000000000001]<br>
+<strong>react_plans</strong> = {'10x10': &lt;city.GridPlan object&gt;, '15x15': &lt;city.GridPlan object&gt;, '5x5': &lt;city.GridPlan object&gt;}<br>
+<strong>react_policies</strong> = {'hist': [&lt;function last_emptying_filter&gt;, &lt;function rand_filter&gt;], 'hold_hist': [(&lt;function hold_filter&gt;, [4]), &lt;function last_emptying_filter&gt;, &lt;function rand_filter&gt;], 'hold_inorder': [(&lt;function hold_filter&gt;, [4]), &lt;function inorder_filter&gt;, &lt;function rand_filter&gt;], 'hold_longest': [(&lt;function hold_filter&gt;, [4]), &lt;function longest_queue_filter&gt;, &lt;function rand_filter&gt;], 'hold_lru': [(&lt;function hold_filter&gt;, [4]), &lt;function lru_filter&gt;], 'hold_rand': [(&lt;function hold_filter&gt;, [4]), &lt;function rand_filter&gt;], 'inorder': [&lt;function inorder_filter&gt;, &lt;function rand_filter&gt;], 'longest': [&lt;function longest_queue_filter&gt;, &lt;function rand_filter&gt;], 'lru': [&lt;function lru_filter&gt;], 'rand': [&lt;function rand_filter&gt;]}<br>
+<strong>tie</strong> = [&lt;function lru_filter&gt;]<br>
+<strong>tiename</strong> = 'lru'<br>
+<strong>turns</strong> = {-1: 20, 0: 60, 1: 15, 2: 5}<br>
+<strong>wisdom</strong> = [&lt;function inorder_filter&gt;]<br>
+<strong>wisdomname</strong> = 'inorder'</td></tr></table>
+</body></html>

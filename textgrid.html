@@ -1,0 +1,102 @@
+
+<!doctype html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module textgrid</title>
+<style type="text/css"><!--
+TT { font-family: lucidatypewriter, lucida console, courier }
+--></style></head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>textgrid</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/beni/python/traffic/textgrid.py">/home/beni/python/traffic/textgrid.py</a></font></td></tr></table>
+    <p><tt>Simple&nbsp;text&nbsp;formatting&nbsp;facilities&nbsp;for&nbsp;printing&nbsp;grid&nbsp;pictures.<br>
+&nbsp;<br>
+The&nbsp;idea&nbsp;is&nbsp;to&nbsp;use&nbsp;lexicographically&nbsp;ordered&nbsp;tuples&nbsp;for&nbsp;coordinates&nbsp;to&nbsp;handle<br>
+all&nbsp;alignment&nbsp;issues;&nbsp;nesting&nbsp;boxes&nbsp;is&nbsp;translated&nbsp;to&nbsp;chaining&nbsp;coordinates.</tt></p>
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="__builtin__.html#object">__builtin__.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="textgrid.html#Box">Box</a>
+</font></dt></dl>
+</dd>
+</dl>
+ 
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Box">class <strong>Box</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>A&nbsp;2-D&nbsp;grid&nbsp;that&nbsp;can&nbsp;be&nbsp;travesed&nbsp;in&nbsp;row,&nbsp;column&nbsp;order<br>
+&nbsp;<br>
+Coords&nbsp;are&nbsp;arbitrary&nbsp;ordered&nbsp;objects;&nbsp;no&nbsp;special&nbsp;negative&nbsp;index&nbsp;treatment<br>
+is&nbsp;done.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Box-__init__"><strong>__init__</strong></a>(self)</dt><dd><tt>Return&nbsp;empty&nbsp;grid.</tt></dd></dl>
+
+<dl><dt><a name="Box-__iter__"><strong>__iter__</strong></a>(self)</dt><dd><tt>Generate&nbsp;iterators&nbsp;in&nbsp;row,column&nbsp;ordering,&nbsp;None&nbsp;for&nbsp;holes.</tt></dd></dl>
+
+<dl><dt><a name="Box-__setitem__"><strong>__setitem__</strong></a>(self, (row, col), obj)</dt><dd><tt>Recursively&nbsp;flatten&nbsp;`<a href="#Box">Box</a>`es&nbsp;into&nbsp;the&nbsp;box.</tt></dd></dl>
+
+<dl><dt><a name="Box-__str__"><strong>__str__</strong></a>(self)</dt></dl>
+
+<hr>
+Data and non-method functions defined here:<br>
+<dl><dt><strong>__dict__</strong> = &lt;dict-proxy object&gt;</dl>
+
+<dl><dt><strong>__doc__</strong> = 'A 2-D grid that can be travesed in row, column o...ecial negative index treatment<font color="#c040c0">\n</font>    is done.<font color="#c040c0">\n\n</font>    '</dl>
+
+<dl><dt><strong>__module__</strong> = 'textgrid'</dl>
+
+<dl><dt><strong>__weakref__</strong> = &lt;member '__weakref__' of 'Box' objects&gt;</dl>
+
+<hr>
+Methods inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><a name="Box-__delattr__"><strong>__delattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Box-__delattr__">__delattr__</a>('name')&nbsp;&lt;==&gt;&nbsp;del&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Box-__getattribute__"><strong>__getattribute__</strong></a>(...)</dt><dd><tt>x.<a href="#Box-__getattribute__">__getattribute__</a>('name')&nbsp;&lt;==&gt;&nbsp;x.name</tt></dd></dl>
+
+<dl><dt><a name="Box-__hash__"><strong>__hash__</strong></a>(...)</dt><dd><tt>x.<a href="#Box-__hash__">__hash__</a>()&nbsp;&lt;==&gt;&nbsp;hash(x)</tt></dd></dl>
+
+<dl><dt><a name="Box-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><tt>helper&nbsp;for&nbsp;pickle</tt></dd></dl>
+
+<dl><dt><a name="Box-__repr__"><strong>__repr__</strong></a>(...)</dt><dd><tt>x.<a href="#Box-__repr__">__repr__</a>()&nbsp;&lt;==&gt;&nbsp;repr(x)</tt></dd></dl>
+
+<dl><dt><a name="Box-__setattr__"><strong>__setattr__</strong></a>(...)</dt><dd><tt>x.<a href="#Box-__setattr__">__setattr__</a>('name',&nbsp;value)&nbsp;&lt;==&gt;&nbsp;x.name&nbsp;=&nbsp;value</tt></dd></dl>
+
+<hr>
+Data and non-method functions inherited from <a href="__builtin__.html#object">__builtin__.object</a>:<br>
+<dl><dt><strong>__class__</strong> = &lt;type 'type'&gt;<dd><tt>the&nbsp;<a href="__builtin__.html#object">object</a>'s&nbsp;class</tt></dl>
+
+<dl><dt><strong>__new__</strong> = &lt;built-in method __new__ of type object&gt;<dd><tt>T.<a href="#Box-__new__">__new__</a>(S,&nbsp;...)&nbsp;-&gt;&nbsp;a&nbsp;new&nbsp;<a href="__builtin__.html#object">object</a>&nbsp;with&nbsp;type&nbsp;S,&nbsp;a&nbsp;subtype&nbsp;of&nbsp;T</tt></dl>
+
+</td></tr></table></td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><dl><dt><a name="-textbox"><strong>textbox</strong></a>(s, r0<font color="#909090">=0</font>, c0<font color="#909090">=0</font>)</dt><dd><tt>Make&nbsp;box&nbsp;from&nbsp;[multiline]&nbsp;str(s);&nbsp;top&nbsp;left&nbsp;corner&nbsp;at&nbsp;r0,&nbsp;c0</tt></dd></dl>
+</td></tr></table>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;&nbsp;</td>
+<td width="100%"><strong>__file__</strong> = './textgrid.pyc'<br>
+<strong>__name__</strong> = 'textgrid'<br>
+<strong>generators</strong> = _Feature((2, 2, 0, 'alpha', 1), (2, 3, 0, 'final', 0), 4096)</td></tr></table>
+</body></html>
