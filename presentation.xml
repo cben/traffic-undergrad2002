@@ -1,0 +1,462 @@
+<presentation filename="presentation.pdf" pageDuration="3">
+  <!-- stylesheet module="standard" function="getParagraphStyles"/ -->
+  <title>Project: "Dynamic" Traffic Lights</title>
+  <author>Beni Cherniavsky</author>
+  <subject>Project presentation</subject>
+  <section name="Main">
+    <!-- any graphics in the section go on all its pages as a backdrop -->
+    <fixedimage x="12" y="36" filename="bg2.png"/>
+
+    <!-- Now for the slides -->
+
+
+    <slide title="Front page" id="Slide01" outlinelevel="0">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading1">Project: ''Dynamic'' Traffic Lights</para>
+    <para style="Italic">Student</para>
+    <para style="Indent">Beni Cherniavsky</para>
+    <para style="Italic">Project Supervisor</para>
+    <para style="Indent">Ari Todtfeld</para>
+    <para style="Italic">Lab</para>
+    <para style="Indent">
+    Control, Robotics and Learning Systems Lab, Electrical Engineering,
+    Technion, Israel
+    </para>
+    </frame>
+    </slide>
+
+    <slide title="Overview" id="Slide02" outlinelevel="0">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading1">Overview</para>
+    <para style="BodyText">This project analyzed systems of traffic ligths, roads and cars,
+    in search of the best startegy for controlling the traffic lights.</para>
+    <para style="Bullet">Problem formulation.</para>
+    <para style="Bullet">Selection of a (quite simplified) model.</para>
+    <para style="Bullet">Simulation software was developed for this model and run with
+    many control strategies (due to time constraints only simple strategies
+    were tried).</para>
+    <para style="Bullet">Analysis of the the results.</para>
+    </frame>
+    </slide>
+
+    <slide title="Problem formulation" id="Slide03" outlinelevel="0">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading1">Part 1 - Problem formulation</para>
+    <para style="BodyText">In one sentence: given junctions, roads and cars find the best
+    strategy for controlling the junctions.</para>
+    <para style="Bullet">Definition of ''best'' will come later.</para>
+    <para style="Bullet">Since the project was open-ended, it was needed to decide on
+    the level of complexity with which to work.  The problem eventually
+    analyzed was, unsurprisingly, very much of a toy problem.</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="The (too) big problem" id="Slide04" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">The (too) big problem</para>
+    <para style="BodyText">Let's first look at the most general (more or less) formulation
+    of the problem to see what was omitted in the toy problem.  Our world
+    consits of three objects:</para>
+    <para style="Bullet">Car that move around.  They can probably enter / leave the city
+    at certain places.  At junctions they decide what turns they should take.
+    They can prefer some roads to others, for complex reasons.</para>
+    <para style="Bullet">Unidirectional roads that delay cars driving through them.  The
+    delay can depend on factors like amount of cars, random effects, etc.</para>
+    <para style="Bullet">Junctions -- our question is <i>How to control them best?</i>
+    They are the most complex part.</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="Real junctions" id="Slide05" outlinelevel="2">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading3">Real junctions</para>
+    <para style="Bullet">A given junction has <i>M</i> input roads and <i>N</i> output roads.
+    There are <i>M*N</i> routes for a car to pass through a junction (or less).</para>
+    <para style="Bullet">A car arriving from input direction <i>m</i> and decides it wants to
+    go to direction <i>n</i> are appended to queue <i>Q<sub>m,n</sub></i> of the
+    junction (not necessarily distinct).</para>
+    <para style="Bullet">At any moment the junction is serving zero or more queues.
+    "Serving" means that from time to time (not necessarily at a fixed rate),
+    one car (or more), is popped from the queue (unless it's empty) and
+    forwarded to the target road(s) the car had chosen.</para>
+    <para style="BodyText">Our task is to choose which queue(s) to serve at every moment.</para>
+    </frame>
+    </slide>
+
+    <slide title="Serving constraints" id="Slide06" outlinelevel="2">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading3">Serving constraints</para>
+    <para style="Bullet">Avoid collisions.  Only some combinations of routes through the
+    junction can be safely served at the same time.</para>
+    <para style="Bullet">switching rate.  Between serving different sets of queues we
+    most waste some more time to avoid collision.  Let's call all this dead
+    time "yellow light" for simplicity.</para>
+    <para style="Bullet">Pedestrians deserve green time too.  Ignored in this project
+    :-).</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="What do we want?" id="Slide07" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">What do we want?</para>
+    <para style="BodyText">By what criteria should we measure how ``good'' a given control
+    policy is?</para>
+    <para style="Bullet">Most importantly, we want minimum total <b>delay</b> for a car along
+    his way.</para>
+    <para style="Bullet">We also want <b>stability</b> (predictable delays are better
+    than strongly fluctuating ones) and <b>fairness</b> (different cars should
+    get similar treatment if possible).</para>
+    <para style="Bullet">Cars travel in different ways =&gt; we measure delays per
+    queue.</para>
+    <para style="Bullet">Stability/fairness can be represented by the variance of the
+    delay among cars.  There are subtle points in these definitions - over
+    what sets we take the means/variances?</para>
+    </frame>
+    </slide>
+
+    <slide title="Sensors / inputs" id="Slide08" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">Sensors / inputs</para>
+    <para style="BodyText">What input should be available to the control system?  One can
+divide the research in this field into three somewhat separate parts:</para>
+    <para style="Bullet">Given perfect information, develop the optimal control
+    strategy.</para>
+    <para style="Bullet">Check how sensitive the strategy is to imperfect information.</para>
+    <para style="Bullet">Devise cheapest sensors giving maximum useful information.</para>
+    <para style="BodyText">We do the first part, so let's help ourselves to whatever
+    information we need :-).</para>
+    </frame>
+    </slide>
+
+    <slide title="The toy problem" id="Slide09" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">Down to earth - the toy problem</para>
+    <para style="BodyText">That's too complex.  Let's make lots of assumptions:</para>
+    <para style="Bullet">Cars decide where to turn statistically with fixed known
+    probabilities, e.g. 60% straight, 20% right, 15% left, 5% reverse.  Bad
+    model of reality but convenient for us (equal arrival rate at all
+    junctions is easy to arrange).</para>
+    <para style="Bullet">This means that all roads are equal.  Also, let all queues be
+    equal, serving one car per time unit.</para>
+    <para style="Bullet">So let's also adopt discrete time - simplifies simulation and
+    especially control definition.</para>
+    <para style="Bullet">Every road has a constant delay and a "vertical" queue at the
+    end.</para>
+    <para style="Bullet">No yellow light time.  We do check the impact of imposing a
+    lower limit on the time each queue is served.</para>
+    </frame>
+    </slide>
+
+    <slide title="The toy problem (cont.)" id="Slide10" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">Down to earth - the toy problem (cont.)</para>
+    <para style="BodyText">And now the most dramatic limitation:</para>
+    <para style="Bullet">Serve only one queue at a time.  Vastly simplifies control
+    decisions.</para>
+    <para style="Bullet">This is far from reality.  Most importantly, this limits the
+    load on each queue to 0.25 (assuming 4 roads per junction)!</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="Theoretical analysis" id="Slide11" outlinelevel="0">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading1">Part 2 - Theoretical analysis</para>
+    <para style="BodyText">I first attempted to an analytical approach. I considered a
+    single junction:</para>
+    <para style="Bullet">Without any sensors (can try to serve empty queues).</para>
+    <para style="Bullet">Arrival rates are given.</para>
+    <para style="Bullet">Choose a random queue to serve on each cycle.</para>
+    <para style="Bullet">I easily found the optimal serving probabilities.</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="First lesson" id="Slide12" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">First lesson - don't serve empty queues</para>
+    <para style="BodyText">I tried to consider more complicated problems.</para>
+    <para style="Bullet">For example to check which queues are empty and avoid serving
+    them.</para>
+    <para style="Bullet">This already is <b>much</b> harder to analyze (the queues are
+    no longer independent).</para>
+    <para style="Bullet">But a quick calculation showed that <b>more than 50%</b> of the
+    time can be wasted on empty queues!</para>
+    <para style="Bullet">I can't analyze anything but uselessly simple problems.  Time
+    for empirical work - I need a simulator to make experiments.</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="Software" id="Slide13" outlinelevel="0">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading1">Part 3 - Software</para>
+    <para style="BodyText">The heaviest and longest part of the project was actually writing
+    the simulation system.  But this less interesting to present so I'll make
+    it short :-).</para>
+    <para style="BodyText">More details about the architecture can be found in the full
+    report, the documentation extracted from the code and the source code
+    itself.</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="Python" id="Slide14" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">Python</para>
+    <para style="BodyText">I chose <b>Python</b> as my implementation language.</para>
+    <para style="Indent">Python is an interpreted object-oriented programming language
+    suitable (among other uses) for distributed application development,
+    scripting, numeric computing and system testing.  Python is often compared
+    to Tcl, Perl, Java, JavaScript, Visual Basic or Scheme.  To find out more
+    about what Python can do for you, point your browser to
+    http://www.python.org/.</para>
+    <para style="BodyText">Was it worth it?  Definitely yes!</para>
+    <para style="Bullet">Quick prototyping; I didn't feel that debugging takes most of
+    the time...</para>
+    <para style="Bullet">The definition of the simulation batch runs and their
+    processing is what scripting languages are ideal for.</para>
+    <para style="Bullet">This presentation was created with two Python tools.</para>
+    <para style="Bullet">In the end it was slow but that's a fair price to pay...</para>
+    </frame>
+    </slide>
+
+    <slide title="City generation" id="Slide15" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">City generation</para>
+    <para style="Bullet">A Manhattan-style geometry.</para>
+    <para style="Bullet">For more interest, strip 30% of the roads.</para>
+    <para style="Bullet">With 3 and 4 roads, it's a junctions.</para>
+    <para style="Bullet">With 2 roads, it's a long road continuation.</para>
+    <para style="Bullet">With 1 roads, it's car source/drain.</para>
+    <para style="BodyText">Like this:</para>
+    <prefmt style="Code">    +-O-O-O-+          @-+-+-O-@
+    | | | | |                |
+    O-O-O-O-O     \    +-O-O-O @
+    | | | | |   ---\   | | | | |
+    O-O-O-O-O       )  O-O-O-O-O
+    | | | | |   ---/   |   |   |
+    O-O-O-O-O     /    @   + +-O
+    | | | | |              | | |
+    +-O-O-O-+          @-+-+ +-+    </prefmt>
+    </frame>
+    </slide>
+
+    <slide title="Control specification" id="Slide16" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">Control specification</para>
+    <para style="BodyText">To implement a wide range of control strategies, a pipeline of
+    plug-in filters was used, where each filter takes a list of queues
+    considered for serving ad returns a new list (usually subset).</para>
+    <para style="Bullet">This made specifying all desired control strategies
+    surprisingly easy.</para>
+    <para style="BodyText">This was further abstracted as orthogonally choosing several
+    parameters, specified as strings:</para>
+    <para style="Bullet">free / hold<i>n</i> - switching rate</para>
+    <para style="Bullet">fix / flex - adaptiveness of switching rate</para>
+    <para style="Bullet">One of pricipal control strategies - see next slide</para>
+    <para style="Bullet">rand / lru - tie breaking</para>
+    </frame>
+    </slide>
+
+    <slide title="Control specification (cont.)" id="Slide17" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">Control specification (cont.)</para>
+    <para style="BodyText">The principal control strategies are:</para>
+    <para style="Italic">blind</para>
+    <para style="Indent">Completely dumb.  Decided by rand / lru.</para>
+    <para style="Italic">nonempty</para>
+    <para style="Indent">Similar but don't serve empty queues.</para>
+    <para style="Italic">longest</para>
+    <para style="Indent">Serve longest queue.</para>
+    <para style="Italic">inorder</para>
+    <para style="Indent">Serve in order of arrival</para>
+    <para style="Italic">hist</para>
+    <para style="Indent">Serve queue predicted to empty last, according to measurements or load history.</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="Simulations" id="Slide18" outlinelevel="0">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading1">Part 4 - Simulations</para>
+    <para style="BodyText">There were two serious runs:</para>
+    <para style="Bullet">The first was intended to probe various pararmeters to get some
+    feeling and determine interesting parameters for the real run.</para>
+    <para style="Bullet">With these parameters a much heavier simulation was run to
+    provide high-quality data for the analysis.</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="Probing the ground" id="Slide19" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">Probing the ground</para>
+    <para style="BodyText">The first thing I wanted to check was how long I need to simulate
+    and on how big a city, to get valid averaged results.</para>
+    <para style="Bullet">I tried three city sizes and built graphs of total number of
+    cars, cumulative mean delay and variance of delay, as a function of the
+    simulation time; car sources were first on and after 4000 cycles were
+    turned off.</para>
+    <para style="Bullet">The conclusions was that 15x15 and 5000 cycles are good.</para>
+    <para style="Bullet">The collected statistics are instructive on their own.</para>
+    <para style="BodyText">See the LaTeX report for the nice numerical tables.</para>
+    </frame>
+    </slide>
+
+    <slide title="Conclusions" id="Slide20" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">Conclusions</para>
+    <para style="BodyText">All non-blind strategies have almost equal delay (with
+    unconstrained switching).</para>
+    <para style="Bullet">Least-Recently-Used is <b>much</b> better than random serving.
+    The magnitude of the difference surprised me.  This trend repeated in all
+    following runs.</para>
+    <para style="Bullet">In-order serving gives lower variance than all other.  This was
+    expected.</para>
+    <para style="Bullet">The load history measurement doesn't differ noticeably from
+    just serving the longest queue.</para>
+    <para style="BodyText">When serving each queue for 4 cycles a time, the results are
+    similar.</para>
+    <para style="Bullet">For very low loads, serving in-order also gives lower delay!</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="Heavy car crunching" id="Slide21" outlinelevel="0">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading1">Heavy car crunching</para>
+    <para style="BodyText">A more exhaustive simulation was run, with the following
+    parameters:</para>
+    <para style="Bullet">15x15 cities.</para>
+    <para style="Bullet">3 different city plans were simulated in parallel.</para>
+    <para style="Bullet">5000 cycles.</para>
+    <para style="Bullet">Higher loads: 0.15, 0.20, 0.23.</para>
+    <para style="Bullet">More control policies.  Switching rates: free / hold2 / hold4 /
+    hold8, fixed / adaptive.</para>
+    <para style="Bullet">Separate statistics for junctions with 3 and 4 roads, since
+    they experience different loads.</para>
+    <para style="BodyText">This amounted to 648 runs, 207,140,557 car-junctions and above 48
+    hours of total run time :-).</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="Results" id="Slide22" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">Results</para>
+    <para style="BodyText">To display the full data I need an 8-dimensional table...  So I
+    wrote a python script to take various cuts/projections of it, reorder the
+    axes and create nicely-looking LaTeX tables.</para>
+    <para style="BodyText">First, I compared between junctions with 3 and 4 roads.</para>
+    <para style="Bullet">As suspected, there is a big difference.  So for precise
+    results, I didn't averaged between them any longer.</para>
+    <para style="BodyText">Then I compared the 3 city plans, for same parameters.</para>
+    <para style="Bullet">There are very noticeable and quite systematic differences.</para>
+    <para style="Bullet">For lower loads, the delays are always A > B > C.  For higher
+    loads, B > A ~= C.  In all cases B has the highest deviation.</para>
+    </frame>
+    </slide>
+
+    <slide title="Results (cont.)" id="Slide23" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">Results (cont.)</para>
+    <para style="Bullet">What in the geometry controls this?  I found only one thing: B
+    had much more car sources/drains; they emit cars with lower
+    auto-correlation than junctions, and this interferes with the control
+    policy.</para>
+    <para style="Bullet">So can we trust the other results, if so much depends on the
+    city geometry?  Fortunately yes, because relations between the values are
+    approximately the same for all plans.</para>
+    <para style="BodyText">Now let's compare the effect of the switching rate.</para>
+    <para style="Bullet">If the switching rate is limited, adaptive limiting gives lower
+    delay than fixed one.  This makes sense.</para>
+    <para style="Bullet">On the other hand, it can harm the fairness.</para>
+    </frame>
+    </slide>
+
+    <slide title="Results (cont.)" id="Slide24" outlinelevel="1">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading2">Results (cont.)</para>
+    <para style="BodyText">Last, I compared the different control policies.</para>
+    <para style="Bullet">Basically, the results agree with the first run.</para>
+    <para style="Bullet">With the increase in the load, the differences aren't smaller.
+    It could be expected that when all queue are full, a blind policy won't
+    have a higher delay.  Probably the load is not high enough.</para>
+    <para style="Bullet">With slow switching rates, the policies do become similar.
+    None of them can predict the future very well.</para>
+    <para style="Bullet">As previously, serving in-order gives the lowest deviation but
+    the delay isn't as low as when serving the longest queue.</para>
+    </frame>
+    </slide>
+
+    
+
+    <slide title="The bottom lines" id="Slide25" outlinelevel="0">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading1">The bottom lines</para>
+    <para style="Bullet">First, avoid serving empty queues as much as possible.
+    Choosing the longest queue is a good strategy to minimize this.  Breaking
+    the tie by choosing the one whose front car arrived first is better
+    yet.</para>
+    <para style="Bullet">Second, flexibly controlling the green time is another way to
+    reduce it.  Serve a queue as long as it has cars, when it empties, switch
+    to another.</para>
+    <para style="Bullet">Third, always prefer least-recently-used approaches to picking
+    at random.  This helps both for delay and fairness.</para>
+    <para style="Bullet">There is some trade-off between delay and fairness.  Serving in
+    order of arrival is always most fair; however it is not very practical
+    since if the switching rate is limited, it gives suboptimal delay.</para>
+    </frame>
+    </slide>
+
+    <slide title="Future directions" id="Slide26" outlinelevel="0">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading1">Future directions</para>
+    <para style="BodyText">In this project I didn't get really interesting results; it was
+    more of a foundation from which somebody can continue.  There are many
+    ways.</para>
+    <para style="Bullet">One could perform more research with the current simulator.
+    The conditions tried are not representative of real-life traffic; higher
+    loads, longer green times, longer roads and yellow lights would be
+    interesting to explore.  The role of the city's geometry should be
+    explored more; the current Manhattan-like geometry is very arbitrary.</para>
+    <para style="Bullet">Implement logging/visualization facilities that would allow one
+    to track the history of a single car (or a little group) and get a feeling
+    of the system's behavior.  This could help to gain intuition for
+    second-order effects.</para>
+    </frame>
+    </slide>
+
+    <slide title="Future directions (cont.)" id="Slide27" outlinelevel="0">
+    <frame height="468" x="120" y="72" rightmargin="36" width="700" leftmargin="36">
+    <para style="Heading1">Future directions (cont.)</para>
+    <para style="Bullet">Smarter car routing; a simple approach is to choose a route
+    like now when a car is created and remove all cycles from it.</para>
+    <para style="Bullet">Account for main/local roads; make cars prefer big roads.</para>
+    <para style="Bullet">Each of the assumptions described at the first chapter could be
+    lifted.  Serving multiple queues at once would be most valuable for
+    getting closer to reality.</para>
+    <para style="Bullet">The ultimate goal: devise control policies that involve
+    communication between junctions.</para>
+    <para style="Bullet">Use your imagination to continue this list...</para>
+    </frame>
+    </slide>
+    
+   </section>
+</presentation>
+

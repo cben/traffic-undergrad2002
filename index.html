@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0//EN">
+<html>
+<head>
+<title>Project: "Dynamic" traffic lights</title>
+</head>
+<body>
+
+<h1>Abstract</h1>
+<p>This project analyzed systems of traffic ligths, roads and cars, in search 
+of 
+the best startegy for controlling the traffic lights.  The problem was
+analyzed and a simplified model was selected.  Simulation software was
+developed for this model and run with many control strategies (due to time
+constraints only simple strategies were tried).  This report documents what
+was done and analyzes the results.</p>
+
+<h2>Download</h2>
+<ul>
+  <li> The <a href="presentation.pdf">presentation</a> 
+       (<a href="presentation.zip">source files</a>)</li>
+  <li> The full <a href="book.pdf">report</a> 
+       (<a href="book.zip">source files</a>)</li>
+  <li> The source code <a href="source.zip">itself</a> (including following
+       documentaion), or <a href="source-pdf.zip">pretty-printed</a>.
+       Source documentation, per module (also included in source archive above):
+       <ul>
+         <li><a href="basic.html">basic.html</a></li>
+         <li><a href="city.html">city.html</a></li>
+         <li><a href="connect.html">connect.html</a></li>
+         <li><a href="mktable.html">mktable.html</a></li>
+         <li><a href="multi.html">multi.html</a></li>
+         <li><a href="run.html">run.html</a></li>
+         <li><a href="simtime.html">simtime.html</a></li>
+         <li><a href="textgrid.html">textgrid.html</a></li>
+         <li><a href="utils.html">utils.html</a></li>
+        </ul> </li>
+       To run, you need Python 2.3, or 2.2 with
+       <a
+       href="http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/*checkout*/python/python/dist/src/Lib/sets.py?rev=HEAD&content-type=text/x-python">
+       sets.py from CVS</a>.  run.py is the main entry point, see the
+       functions inside.  The report above also contains some useful
+       information on the source.
+  <li> The <a href="Makefile">Makefile</a> to generate all the things. </li>
+  <li> The big <a href="results-dat.tar.bz2">data-files</a> from the runs, 
+       the big <a href="results-ps.tar.bz2">graphs</a> generated from them
+       and the small other <a href="results-other.tar.bz2">files</a>.
+       Hint: the big files are not realy that interesting...
+       Note that the directory <tt>resuts3</tt> is a fix run intended to replace
+       the corresponding LRU results in <tt>results</tt>.
+</ul>
+
+<h1>Acknowledgements</h1>
+<p>I wish to thank my advisor, Ari Todtfeld, for guiding me; the Control,
+Robotics and Learning Systems Lab for providing this project and being ready
+to provide resources for it (even if I mostly prefered to work at home); and
+my brother Eli for tolerating that I grabbed the computer for long
+times <tt>:-)</tt>...</p>
+
+Also I want to thank Richard Stallman, Linus Torvalds, Guido van Rossum,
+Donald Knuth, Lesley Lamport and all other people who created GNU/Linux,
+Emacs, Python, LaTeX and all the great free software that I used...
+
+</body>
+</html>

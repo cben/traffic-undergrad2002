@@ -1,0 +1,1027 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage{varioref}
+\usepackage[dvips]{graphicx}
+
+% This package breaks in xdvi but I really need it for some tables...
+\usepackage{rotating}
+
+% py2tex didn't work for me; this is a hack based on enscript -W rtf
+% passed through a sed script; it's not used since it is too fragile...
+\providecommand{\PythonInput}[1]{
+  \section{#1}
+  \footnotesize{
+    \texttt{
+      \input{#1}
+    }
+  }
+  \pagebreak
+}
+
+\providecommand{\triangleq}{\ensuremath{\stackrel{\triangle}{=}}}
+
+\newcommand{\smiley}{\texttt{:-)}}
+\newcommand{\winkey}{\texttt{;-)}}
+
+\newcommand{\module}{\texttt}
+\newcommand{\class}{\textsf}
+\newcommand{\meth}{\textsf}
+\newcommand{\file}{\texttt}
+\newcommand{\txt}[1]{\texttt{\textsl{#1}}}      % text from log files
+
+\newcommand{\x}{\ensuremath{\times}}
+
+\newcommand{\conc}{\item[$\Rightarrow$]} % conclusion items
+
+\author{
+  Student -- Beni Cherniavsky
+  \thanks{cben@tx.technion.ac.il}
+  \and Project Supervisor -- Ari Todtfeld
+  \thanks{todtfeld@tx.technion.ac.il}
+  \and Control, Robotics and Learning Systems Lab,
+  \thanks{http://www.ee.technion.ac.il/control/}
+  \and Electrical Engineering, Technion, Israel}
+\title{Project -- ``dynamic'' traffic lights}
+\date{November 2002}
+
+\begin{document}
+
+\maketitle
+
+\chapter*{Abstract}
+This project analyzed systems of traffic ligths, roads and cars, in search of
+the best startegy for controlling the traffic lights.  The problem was
+analyzed and a simplified model was selected.  Simulation software was
+developed for this model and run with many control strategies (due to time
+constraints only simple strategies were tried).  This report documents what
+was done and analyzes the results.
+
+\section*{Acknowledgements}
+I wish to thank my advisor, Ari Todtfeld, for guiding me; the Control,
+Robotics and Learning Systems Lab for providing this project and being ready
+to provide resources for it (even if I mostly prefered to work at home); and
+my brother Eli for tolerating that I grabbed the computer for long
+times~\smiley\ldots
+
+Also I want to thank Richard Stallman, Linus Torvalds, Guido van Rossum,
+Donald Knuth, Lesley Lamport and all other people who created GNU/Linux,
+Emacs, Python, LaTeX and all the great free software that I used...
+
+\tableofcontents
+\listoftables
+\listoffigures
+
+
+\chapter{Problem formulation}
+
+In one sentence: given junctions, roads and cars find the best strategy for
+controlling the junctions.  Definition of ``best'' will come later.  Since the
+project was open-ended, it was needed to decide on the level of complexity
+with which to work.  The problem eventually analyzed was, unsurprisingly, very
+much of a toy problem.
+
+\section{The (too) big problem}
+
+Let's first look at the most general (more or less) formulation of the problem
+to see what was omitted in the toy problem.  It should be able to represent
+almost all aspects of traffic light control in real life, at the cost of being
+impossible to analyze~\smiley.
+
+Our world (``city'') consists of three main object types:
+\begin{itemize}
+  \item Cars that move around.  They can probably enter / leave the city at
+    certain places.  At junctions they decide what turns they should
+    take.\footnote {We assume that the choice of turns is independent from
+    the delays on the road.  Strictly speaking this is not correct --- drivers
+    try to stay away from jams they see ahead or hear about in traffic
+    reports.  However dropping this assumption would make comparison between
+    control strategies problematic.  For example if a person altered the order
+    of his appointment to avoid a jam and thus lowered the total delay, it's a
+    definite success of the reporting system but is it a success or a failure
+    of the junction control system?}
+      
+  \item Unidirectional roads that delay cars driving through them.  The delay
+    can depend on factors like amount of cars, random effects, etc.
+
+  \item Junctions -- our question is \emph{How best to control them?}
+\end{itemize}
+A given junction has $M$ input roads and $N$ output roads.  There are
+$R~\triangleq~MN$ routes for a car to pass through a junction (maybe less, for
+example certain left turns can be forbidden, etc.).  A car arriving from input
+direction $m$ and decides it wants to go to direction $n$ are appended to
+queue $Q_{m,n}$ of the junction (not necessarily distinct -- different $n$s
+can share the same queue).  At any moment the junction is serving zero or more
+queues.  ``Serving a queue'' means that from time to time (typically at a
+fixed rate for each queue, maybe after transition effects), one car (or more,
+think multiple lanes), is popped from the queue (assuming it's not empty) and
+forwarded to the target road(s) the car had chosen.
+
+The choice of queue(s) to serve at a given moment is the subject of our
+analysis.  Obviously it must be done under some constrains (otherwise we have
+an ideal interchange where all queues can be served at once and no project to
+do~\winkey):
+
+\begin{itemize}
+  \item Avoid collisions.  For every two routes $r \triangleq m \to n$, $r'
+    \triangleq m' \to n'$ to pass the junction, let $C_{r,r'}$ be 1 if the
+    these car paths collide, 0 if they don't.  Given this matrix we can find
+    all \emph{maximum sets of compatible routes} (a set S is such if
+    $\forall~r,r'~\in~S,\ C_{r,r'}=0$ but $\forall~\tilde r~\in~R-S\ \forall r
+    in S,\ C_{\tilde r, r}=1$).
+
+    Once computed (for given $C$), these sets redefine our task as choosing,
+    at every point in time, which if these sets of queues to serve.
+
+  \item Switching speed.  Instantaneous switching from serving one set of
+    queues to another would cause collisions just as well.  So every switch is
+    penalized with some dead time when nobody is served.  Let's call this dead
+    time \emph{``yellow light''} even though it's not only it.  Similarly,
+    acceleration from stopped state further reduces the throughput for some
+    time after a starts to be served.  Actually, these effects happen per
+    queue independent of other queues simultaneously served (which makes the
+    above sets-of-queues switching model more complex).  The net effect: the
+    lower the switching rate the higher the total car throughput.
+
+  \item Pedestrians.  Every input and output path must be closed at least
+    occasionally to allow for green lights for pedestrians too.  Since
+    junction designers don't seem to care much for them, this is the last
+    mention of them in this project~\smiley.
+\end{itemize}
+
+\section{What do we want?}
+
+What are our criteria for measuring how ``good'' a given control policy is?
+
+\begin{enumerate}
+  \item Most importantly, we want minimum total \emph{delay} for a car along his
+    way.  If road delays are constant this boils down to the delay in the
+    junction queues.
+    
+  \item We also want \emph{stability} (predictable delays are better than
+    strongly fluctuating ones) and \emph{fairness} (different cars should get
+    similar treatment if possible).
+\end{enumerate}
+
+Since different cars travel in different ways, it makes more sense to measure
+the average delay for each queue instead of for each car.  Given these delays,
+we can try to define some effective delay of the city as some weighted
+combination of these.
+
+Stability and fairness can be represented by the variance of the delay
+distribution.  Here it isn't really valid to use the per-queue measurement
+approach if there is correlation between delays at different junctions.
+However comparing cars traveling in different ways would inflate the variance
+without reason.  The proper definition is to measure variances between all
+cars the traveled the same routes (or at least shared route segments of some
+length).  Since this would require tremendous simulation times to collect
+enough data and since in the end no control strategies deliberately creating
+correlation were used, the per-queue approach was used.  (Some care has to be
+taken then when talking of the total variance over the city).
+
+One more point to discuss: what input should be available to the control
+system?  One can divide the research in this field into three somewhat
+separate parts:
+\begin{itemize}
+  \item Given perfect information, develop the optimal control strategy.
+  \item Check how sensitive the strategy is to imperfect information.
+  \item Devise cheapest sensors giving maximum useful information.
+\end{itemize}
+This project belongs to the first part, so let's have full information~\smiley.
+
+\section{Down to earth (the toy problem)}
+
+The above model is way to complex to be useful.  Let's throw away complicating
+details, until we get something manageable.
+
+\begin{enumerate}
+  \item Cars decide where to turn statistically --- fixed known\footnote
+    {\{60\% straight, 20\% right, 15\% left, 5\% reverse\} were used in the
+    simulations.}  probabilities are assigned to the possible turns.  This
+    turning profile doesn't closely model real traffic (for example cars will
+    readily enter dead ends or go in circles).  The positive side is that an
+    equal average car arrival rate at all junctions can easily be guaranteed.
+    Thus we give up modeling of heterogeneous traffic load to be able to
+    measure parameters as functions of the load.
+  \item Get rid of multiple lanes --- all queues are served one car at a time
+    with same constant speed.
+  \item Ignore acceleration issues.  Use the ``vertical queue'' model --- the cars
+    stack on on top of the other at the end of the road instead of stretching
+    back from the stop line.  This is universally used in all traffic
+    simulation literature I saw.
+  \item This is close to discrete time, so let's adopt it (much easier to
+    simulate, control, measure\ldots).  Implications: serve one car per
+    cycle, roads length are integral number of cycles, etc.  One of the
+    results is that at most one car per cycle can arrive from a every input
+    road.
+  \item Roads have constant delays (no jams along the roads, only at
+    junctions; no ``platoon dispersion'' which is actually important to
+    consider but we don't).
+  \item No yellow lights.  The original motivation for this was that to be
+    able to control multiple junctions in some correlated manner, we will want
+    to limit the switching rate to about the speed of passing an average road
+    anyway.  In the end only local control was implemented so this doesn't
+    hold.  Yellow lights were actually implemented in the simulator but not
+    used due to time limits.  Besides, the control strategies tried didn't
+    take them into account anyway.  Timing constraints were modeled by
+    directly placing lower/fixed limits on the time each queue is served.
+  \item Serve only one queue at a time.  Analyzing serving of sets of queues
+    simultaneously turned out to be too complex.  We do allow cars from one
+    queue to serve many input directions (i.e. only one input road gets green
+    light at the same time and cars can turn to all output directions).  Note
+    that this is a big departure from reality!  It is suboptimal for typical
+    junctions where most cars travel straight.  \emph{It limits the load} to
+    be below $1/\max \{\mathrm{inputs}_J \mid J \in junctions\}$ because
+    otherwise that junction will accumulate cars faster than it can dispose of
+    them and will become unstable.  In our simulations this means that the
+    load must be below $0.25$.
+\end{enumerate}
+
+
+\chapter{Project progress, issues and solutions}
+
+\section{Theoretical analysis}
+
+First I tried to analyze a single junction.  Consider the question of
+determining the best green time proportions for a \emph{blind} (with no
+sensors, doesn't even know which queues are empty) junction with known arrival
+rates.  Assume the junction can serve a different queue every cycle (no
+switching rate limits).
+
+It knows only the arrival rates\footnote {note that a car can arrive together
+with departing, so the effective rates are $\lambda(1-\mu)$ and
+$\mu(1-\lambda)$.} $\{\lambda_m\}_{m=1}^M$ to the queues.  Assuming it
+randomly choses the queue to serve each cycle with probabilities
+$\{\mu_m\}_{m=1}^M$, how to chose those probabilities (satisfying
+$\sum_{m=1}^M \lambda_m = 1$) to get minimal average delay?
+
+This is a simple M/M/1 queues and optimization problem, resulting in:
+\[
+\mu_m = \lambda_n + \sqrt{\frac
+  {\lambda_m(1-\lambda_m)}
+  {\sum_{m=1}^M \lambda_m(1-\lambda_m)}}
+\]
+In other words, divide the extra serving rate $1-\sum \lambda_m$ proportionally
+to the factors $\lambda_m(1-\lambda_m)$.  This was later simulated by
+comparing junctions with optimal (according to the above formula) and
+suboptimal $\mu_n$ probabilities and optimal junction indeed gave lower delay.
+
+Then I tried to analyze a junction that can serve several queues at once.  This
+was described before and as I said I gave it up.  Solving this for one
+junction (still blind) seemed possible but very hard.  I realized that if I
+ever want to reach multiple junctions, I must simplify the single junction.
+
+I also considered the other details of the model (cycle length limits, yellow
+light, etc.) and more or less settled for the model discussed above at this
+stage.
+
+Then I tried to consider non-blind junctions.  The problem is that the
+probability to serve one queue depends (at least) on whether the other queues
+are empty.  So I can't analyze queues independently.  Just the first 4 states
+($(0,0), (0,1), (1,0), (1,1)$) of the state diagram for two queues resulted in
+a frightening diagram.  It's probably solvable with some smart trick but
+becomes increasingly complex.
+
+On the other hand I made a quick calculation of the probability that the above
+optimal blind junction decides to serve an empty queue (thus wasting
+throughput).  To my horror it turned out to exceed 50\% at some realistic
+parameters!  So unless we only deal with heavy load (when queues seldom become
+empty), a blind junction is a terrible waste.
+
+The conclusion from all this was that the time came to leave theory aside and
+write a computer program for simulation.
+
+I also briefly looked at predicting which cars have good chances of being
+stuck at next junction and giving them lower priority (since serving them
+later probably won't increase their total delay).  I didn't find an obviously
+good algorithm and dropped the issue deciding that I better implement at least
+something without prediction.
+
+\section{Software}
+
+\subsection{Implementation language}
+
+I've chosen Python that I recently learned and came to like very much.  It
+seemed well suited to the task at hand.  From its \file{README}:
+
+\begin{quote}
+\textbf{What is Python anyway?}
+
+Python is an interpreted object-oriented programming language suitable
+(among other uses) for distributed application development,
+scripting, numeric computing and system testing.  Python is often
+compared to Tcl, Perl, Java, JavaScript, Visual Basic or Scheme.  To
+find out more about what Python can do for you, point your browser to
+http://www.python.org/.
+\end{quote}
+
+Was it worth it?  Sure!  I feel that the high abstraction level and quick
+development cycle Python provided has paid off many times.  This project required
+many small tasks having to do with organizing the simulation runs and such a
+scripting language is perfect for them.
+
+The performance became a bottleneck at the simulation running period but still
+I think it was worth the development ease.  Besides the task is mostly
+symbolic computations and languages like C aren't that fast at them anyway.
+
+\subsection{Architecture}
+
+The problem at hand nicely lends itself to an object-oriented architecture (at
+which Python is very good, in my opinion; among others multiple inheritance
+was heavily used).
+
+A good way to get a bird's eye view of the architecture is to describe the
+function of the modules composing the program:
+
+\begin{description}
+  \item[utils] Random functions (pun intended, one of them deals with
+    random numbers).
+    
+  \item[textgrid] Simple text formatting facility for printing grid
+    pictures.
+    
+  \item[simtime] Registry objects for city elements having
+    \meth{.tick()} methods that call them every cycle (in partially defined
+    order).
+    
+  \item[connect] Facilities for defining and conveniently connecting
+    elements that have one or more named inputs and/or outputs.
+    
+  \item[basic] Basic elements with one input and/or output:
+    \class{Car}, \class{Source}s that produce cars, \class{Drain}s that
+    consume them, \class{Road}, \class{Queue}s and simplest \class{Server}s.
+    
+  \item[multi] Complex elements with many inputs and/or outputs:
+    support base classes, \class{RandomRouter}s and \class{SwitchedServer}.
+    
+  \item[city] Almost the top module, imports the rest.  Implement
+    \class{City} objects that contain elements and \class{GridPlan} objects
+    that represent subset-of-grid city geometries and can implement them by
+    creating cities.
+    
+  \item[run] Top file running the whole thing.  Contains all the
+    parameter choosing, running, logging and graphing logic.
+
+  \item[mktable] A stand-alone script that parses log files, treats them as
+    multidimensional information and prepares beautiful \LaTeX tables with
+    different views of it (with value selection and averaging abilities).
+\end{description}
+
+\subsection{Highlights}
+
+Here are some highlights of problems and their solutions in the simulator.
+
+\begin{itemize}
+  \item Cars are passive object carried around by elements of the city.  Their
+    only methods are for statistics collecting.
+
+  \item Proper ordering of actions was achieved by:
+    \begin{itemize}
+      \item Procedural means in the simplest cases (for example injecting a
+        car into some element is done by calling its \meth{.append(car)}
+        method which can react to this immediately).
+      \item The long-term time line is managed by a \class{SimTime} object
+        (every city has one).  Most elements have a \meth{.tick()} method.
+        The time manager calls this method of all objects that were registered
+        with it every cycle.  To make interactions during the same cycle
+        well-defined, the objects are divided into several ``phases'' by their
+        class and called with certain order between the phases (compare with
+        ``delta'' times in VHDL simulation).
+    \end{itemize}
+    
+  \item Connecting elements is based on a \class{Group} interface (implemented
+    by all elements) of an object which has named\footnote {A default name is
+    used for single input/output cases} input and/or output ports.  Connecting
+    resolves input/output names between two objects (like linking programs)
+    and returns a virtual \class{Group} combining the unresolved ports of both
+    objects.  Virtual \class{Group}s are also used to implement renaming ports
+    and ``overlaying'' objects without linking.  These features proved very
+    useful in the creation of complex cities.
+
+  \item Junctions were implemented as consisting of two parts: a
+    \class{SwitchedServer} with multiple inputs and one output connected to a
+    \class{RandomRouter} with one input and multiple outputs.  The serves
+    serves at most one queue at a time.  The router looks at the original
+    direction recorded in the car by the server to choose probabilities for
+    the possible outputs.  There are also many slave objects to represent the
+    queues and outputs.
+
+    In the server, unlike most other objects in the program, I wasn't
+    satisfied with sub-classing the base class to define the possible control
+    strategies (even with multiple inheritance) because it didn't provide
+    enough flexibility.  Instead, a plug-ins-based architecture was employed.
+    There is one \class{SwitchedServer} class that is parametrized with a list
+    of filters.  They are applied in order, starting with the full list of
+    input queues, until one or zero candidates remain.
+
+    This way, the control strategy specification was split into many
+    components, mostly orthogonal:
+    \begin{description}
+      \item[rand\_filter] Break ties by choosing a random queue.
+      \item[lru\_filter] Break ties by choosing the least-recently-used queue.
+        If previous filters (if any) result in stable queues set, this results
+        in a round-robin behavior.
+      \item[nonempty\_filter] Don't serve empty queues.
+      \item[hold\_filter] Allow deciding on a queue only once in $k$ cycles.
+      \item[attempt\_hold\_filter] Serve same queue that was served last time,
+        unless it was dropped by previous filters (i.e. switch queue only when
+        forced).  In combination with hold\_filter, allows to prolong serving
+        of one queue to more than $k$ cycles.
+      \item[longest\_queue\_filter] Serve the queue with most cars.
+      \item[last\_emptying\_filter] Serve queues predicted to empty last (if
+        served continuously), based on input load measurements done by each
+        queue.  Queues measuring load by sliding window and exponential
+        averaging were implemented\footnote {only exponential averaging was
+        tried in simulations, with characteristic decay length of 4 cycles; it
+        didn't make much difference anyway}.  For estimated arrival rate
+        $\lambda$ and serving rate $1$, a queue of length $L$ is expected to
+        become empty after $L / (1 - \lambda)$ cycles.
+      \item[inorder\_filter] Serve the queue whose first car waited most.
+        This was intended to be the most fair strategy theoretically possible
+        by effectively treating all queues as one.  Note that it is almost
+        completely impossible to implement in real life.  Among others, it
+        doesn't have this property when switching rate is limited; however
+        switching to a different queue each car is very impractical\ldots
+    \end{description}
+    These filters can be combined in various creative ways; many but not all
+    of them were exercised by the simulations.
+
+    Yellow light was implemented in the \class{SwitchedServer} class itself
+    (it didn't fit the filters model conveniently enough) but as already said
+    it wasn't used in simulations (it wasn't even tested).
+        
+  \item ``Interesting'' city geometries were generated without dealing with
+    arbitrary graphs by starting with a full rectangular grid , dropping a
+    certain portion (30\% in the simulation) of the roads and treating
+    junctions according to number of roads: 3 or 4 -- remains a junction, 2 --
+    join the road into longer roads, 1 -- a source/drain pair and for 0
+    nothing is created.  All roads are bi-directional.  Example:
+
+    \begin{center}
+      % Ugly size hacks ahead.  Don't know to make better now...
+      \begin{minipage}[c]{2cm}
+        \begin{verbatim}
++-O-O-O-+
+| | | | |
+O-O-O-O-O
+| | | | |
+O-O-O-O-O
+| | | | |
+O-O-O-O-O
+| | | | |
++-O-O-O-+
+        \end{verbatim}
+      \end{minipage}
+      {\Huge $\Rightarrow$}
+      \begin{minipage}[c]{2cm}
+        \begin{verbatim}
+@-+-+-O-@
+      |  
++-O-O-O @
+| | | | |
+O-O-O-O-O
+|   |   |
+@   + +-O
+    | | |
+@-+-+ +-+
+        \end{verbatim}
+      \end{minipage}
+    \end{center}
+    (where \txt{-} and \txt{+} represent roads, \txt{+} long roads join,
+    \txt{O} junctions and \txt{@} source/drain pairs).
+
+  \item Directions were represented with vectors -- tuples of $(\delta x,
+    \delta y)$.  This proved much more useful then encoding them with, say
+    $\{0,1,2,3\}$, because they could be directly manipulated in many creative
+    ways.
+    
+  \item To make comparisons between different strategies fair, the city
+    geometry is generated in a plan object once and multiple cities can be
+    instantiated based on the same plan.
+
+  \item When running, progress and results are both printed to the screen and
+    logged to a file too using a file-like \class{Log} class.  Simple graphs
+    are with a s function that writes \file{*.plt} and referred by them
+    \file{*.dat} files and runs \file{gnuplot} to do the work.
+    
+  \item Since the run was very long (5 hours first part, above 2 days the
+    second), I needed a way to stop and restart where I left.   To this end:
+    \begin{itemize}
+      \item City plans ascii-art dumps (in the above format) are written into
+        \file{*.plan} files in the output directory; if the file already
+        exists, it's loaded and the plan is set from it instead of being
+        randomly generated.
+      \item When the log file is opened for appending, it's also scanned for
+        headers of simulations already run.  Before running every simulation,
+        it's compared to the loaded list and skipped if already done.
+    \end{itemize}
+    These features made the annoyingly long runs quite
+    tolerable\ldots\footnote {Also, the just-in-time optimizer for Python,
+    Psyco (\texttt{http://psyco.sf.net}) was used and seemed to give a speedup
+    of somewhat below 2, lower than its average performance but still very
+    welcome \smiley}
+
+  \item Simulation parameters are defined with nested loops over different
+    aspects of the parameters.  Every aspect's possible values have short
+    symbolic names which, combined into one string, are used to name output
+    files and identify the parameter sets in graphs and logs.  For example:
+    \txt{0.20-hold4\_fix\_rand-C}.
+
+  \item ``Visualization'' of numbers in nice tables was implemented in a
+    separate log$\to$tables converter script which knows to nest tables to
+    show more than 2-dimensional data.
+\end{itemize}
+
+You are referred to the source code for the full details.  The source code
+contains pretty good documentation that should be enough for understanding and
+modifying the code.  It does not contain enough documentation for interfacing
+to the code without reading it, simply because it provides no such
+interface~\smiley.  There is no clear implementation/user division line.
+Levels of convenience were implemented, until I was able to run the thing
+conveniently (with the Python prompt as my interface).  If you just want to
+reproduce my results, its enough to say at the Python prompt:
+\begin{verbatim}
+  >>> from run import *
+  >>> all_react()
+  >>> all_main()
+\end{verbatim}
+(be prepared for a couple days of running!).  However if you want alter
+simulation parameters, you need to modify the code --- from superficial
+\module{run.py} modifications to writing new classes, depending on how much you
+want to change.
+
+
+\chapter{Simulation Results and Conclusions}
+
+\section{First Part -- Probing the Ground}
+
+The main purpose of the first serious run was to find out good parameters for
+subsequent runs.
+
+One issue that interested me was the validity of averaging data over some time
+that includes transition effects in the beginning, until the initially empty
+city stabilizes around a given number of cars.  This was checked by simulating
+cities and recording the number of cars at every moment.  It was later plotted
+(see Figure~\vref{fig-car} for example) so that the reaction time to turning
+the sources on at $t=0$ can be visually inspected.  Similarly, at $t=4000$
+cycles, all sources were turned off and simulation continued until $t=6000$;
+the reaction time to this too can be inspected.
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{results/react_0.10-rand-car.ps}
+  \caption{Reaction test -- car number: load=0.10, free, rand}
+  \label{fig-car}
+\end{figure}
+
+The second thing checked was how long do I need to run to get sensible
+results.  This was visualized by plotting the average and deviation over the
+whole city, accumulated from $t=0$ as function of $t$ (see
+Figures~\vrefrange{fig-wait}{fig-dev} for example).
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{results/react_0.10-hold_rand-wait.ps}
+  \caption{Reaction test -- average delay: load=0.10, hold=4, rand}
+  \label{fig-wait}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{results/react_0.10-hold_rand-dev.ps}
+  \caption{Reaction test -- total deviation: load=0.10, hold=4, rand}
+  \label{fig-dev}
+\end{figure}
+
+The third thing checked was how big a city is needed.  Every set of parameters
+was tried on 3 cities of sizes 5\x5, 10\x10 and 15\x15.  Each of the above
+plots was combined on one sheet for the three cities.
+
+Last but not least, the volume of the run wasn't small.  It ran for about 5
+hours\footnote {All run times are reported from my 933MHz Pentium III}.  All
+of the above was repeated for 3 load values (0.05, 0.10, 0.20\footnote {Recall
+that 0.25 would saturate the system}) and a fair number of control policies.
+The collected statistics are instructive on their own.
+
+\subsection{Results}
+
+First, the qualitative conclusions:
+\begin{itemize}
+  \conc The number of cars typically stabilizes after no more than 1000
+    cycles.  This doesn't seem to contribute much to the final values -- the
+    curve becomes flat.  Conclusion: \emph{it seems OK to include the startup
+    period in measurement}.
+  \conc After 5000 cycles the resulting delay and deviation become as stable
+    as they can get.  Since the deviation doesn't go down, we know this is the
+    ``inherent'' deviation of the system and result from low amount of
+    measurement.  \emph{5000 cycles will be used for second part of
+    measurements.}
+  \conc The 10\x10 and 15\x15 cities differ little one from the other but
+    differ seriously from 5\x5.  The problem with 5\x5 is that it is too small
+    for reliable statistics.  For example I saw frequently 5\x5 cities torn
+    into two halves, etc.  \emph{To be on the safe side, 15\x15 will be used
+    for the second part.}
+\end{itemize}
+
+The numerical results are summed up in Table~\vref{tab-react}, based on short
+identifiers describing different aspects of the run parameters.  There is the
+load of course; there is also the plan name (written last).  The rest
+describes the control policy: \txt{hold} means that switching was limited to
+once in 4 cycles (in this part), \txt{lru}/\txt{rand} are the blind policies,
+\txt{longest}, \txt{hist}, \txt{inorder} are the queue-inspecting policies
+described before.  \txt{avg} and \txt{dev} are obviously the average and the
+deviation.
+
+Analysis of the numerical results:
+\begin{itemize}
+  \conc We see, as can be easily expected, that the three smart policies
+    (which all don't serve empty queues) have almost equal delay.  This makes
+    sense -- the average delay depends only on the portion of throughput
+    wasted by serving empty queues.  The differences between them are very
+    small and don't seem systematic so they should be attributed to random
+    variations.
+  \conc We see that LRU and random serving are both much worse but while LRU
+    is still in some acceptable bounds, the random policy gives completely
+    horrible results.  It can be intuitively expected that LRU which cover
+    queues more systematically, will leave less cars to wait for long;
+    nevertheless the fact that \emph{blind LRU's delay is closer to that of
+    controls with empty queue sensors} is very surprising to me.  I'm not sure
+    how to explain that big difference.
+  \conc We see that the blind policies have bigger deviations than the ones
+    with sensors.  This is reasonable, especially since the values are all on
+    the positive side of the zero (so typical probability distributions have
+    give higher deviations with high higher means).
+  \conc We see that the in-order serving policy gives smaller deviation than
+    all others.  This is consistent with the predictions -- it was designed
+    precisely for that -- to result in lowest theoretically possible
+    deviation.
+  \conc The longest queue policy and the arrival rate measuring policy give
+    practically equal results.  Actually they are very similar: the later just
+    divides the queue length by $1 - \lambda$.  Since in our simulations the
+    load is approximately equal on all inputs, we see no big difference.
+    Conclusion: \emph{There is no strong autocorrelation in the arrival rates
+    in this system} so the measurements of the past give little information
+    about the future.
+  \conc The results with switching rate limited to once per 4 cycles are quite
+    similar, except for the overall higher delay and waiting time.  This is
+    not very surprising but not obvious either -- the ``smart'' policies can't
+    be expected any longer to give equal delays.  Indeed they don't but the
+    results are not dramatically conclusive.
+
+    Roth policies based on the queue length give very close results.  This is
+    a bit unexpected since the with limited switching rate, the arrival rate
+    should have a certain autocorrelation.  The probable explanation is that
+    the measurement scheme which has a reaction time of the same order as the
+    autocorrelation time, (add the road delay to it) is reacting too late.
+    \emph{Communication between junctions should be able to provide an
+    advantage here}.
+
+    There are noticeable differences between the in-order policy and the
+    queue-length based policies.  They are surprising: for very low
+    loads\footnote {To get a feeling: with switching every 4 cycles and
+    arrival rate of 0.05, less than one car arrives on average during each red
+    light period!}, serving the car waiting the most is \emph{not only more
+    fair but also seems to have a predictive quality} for the future beyond
+    that given by the current queue length!  On the other hand for higher
+    loads, serving in order of arrival starts to be worse than looking at the
+    queue length.
+
+    On a second thought it makes sense: when queues rarely exceed a length of
+    1 car, the arrival time is an extra information that is not available to
+    the length-of-queue based strategy.  However the length of the queue is
+    much more solid promise for less serving of empty queues~--- when there is
+    a difference in length it's more important than arrival times of the first
+    cars in each queue\ldots
+\end{itemize}
+
+\begin{sidewaystable}
+  \begin{center}
+    \input{react.tex}
+    \caption{Reaction test numerical results, averaged over 10\x10 \& 15\x15
+      cities.}
+    \label{tab-react}
+  \end{center}
+\end{sidewaystable}
+
+\section{Second Part -- the Heavy Car Crunching}
+
+With the experience from the first run described above, a more heavy and
+exhaustive simulation was run, with the following parameters:
+
+\begin{itemize}
+  \item 15\x15 cities.
+  \item 3 different plans of this size (called \txt{A}, \txt{B} and \txt{C})
+    were simulated.  This is intended to determine what fluctuations derive
+    from the random city geometry and what is defined by the other parameters.
+  \item Each run is for 5000 cycles.
+  \item Higher load values: [0.15, 0.2, 0.23].  The loads considered
+    previously are a bit too low.  We wanted to cover these loads too.
+  \item More control policies.  All combinations of the following\footnote
+    {except for \txt{blind} combined with \txt{flex} which would serve one
+    queue indefinitely\ldots} were tried:
+    \begin{itemize}
+      \item \txt{free}, \txt{hold2}, \txt{hold4}, \txt{hold4} --- Switching
+        rate is unlimited or limited to once per 2, 4 or 8 cycles.
+        
+      \item \txt{flex} --- Serve same queue as last time, if possible.  In
+        combination with \txt{hold}$k$, also means that the switching rate
+        limit will be flexible -- if the queue is not empty after $k$ cycles,
+        continue serving it.
+        
+        \txt{fix} --- the opposite.  Note that the same queue can still be
+        re-selected for another $k$ cycles -- but only on $t \bmod k = 0$
+        boundaries.
+        
+      \item \txt{blind} --- Proceed directly to LRU/random resolution below.
+
+        \txt{nonempty} --- Only try to serve non-empty queues; no preference
+        beyond that.
+
+        \txt{longest} --- Choose the queue(s) with most cars.
+
+        \txt{hist} --- Choose the queue(s) predicted to become empty last if
+        served continuously.
+
+        \txt{inorder} --- Choose the queue(s) whose cars arrived first.
+
+      \item \txt{rand} --- If the above selection left several equally good
+        queues, resolve by choosing at random.
+
+        \txt{lru} --- Resolve ties in LRU manner.
+    \end{itemize}
+    These short names will be used extensively in the following discussions of
+    the results.
+
+  \item Separate statistics for junctions with 3 and 4 roads.  The motivations
+    is that given equal average load at all roads, junctions with 4 roads
+    experience higher total load than ones with 3 roads.  This can be
+    responsible for part of the deviation.  Collecting statistics separately
+    will not suffer from this ``false'' deviation.
+\end{itemize} 
+
+These parameters combine to amount for a very long run.  There are 72
+different policies; multiplied by 3 load values and 3 plans, we get 648 runs.
+The sum of the counts of cars that passed through each junction (i.e. each car
+is counted many times) is 207,140,557 (two hundred millions) \smiley.  The
+total running time exceeded 48 hours (I don't have exact figures because
+thanks to the restart-ability facilities, I was able to interrupt for
+rebooting to a lesser OS several times).
+
+\subsection{Results}
+
+The data from this run is essentially 8-dimensional.  Displaying all of it at
+once is impossible and incomprehensible.  So different projections/cuts of it
+will be presented, with arbitrary choices (or averaging where sensible)
+imposed on parameters that give less insight to the issues at hand, in order
+to reduce the number of dimensions.
+
+\begin{itemize}
+  
+  \conc Table \vref{tab-main34} compares between statistics for junctions with
+    3 and 4 roads.  It clearly shows that the suspicions were true.
+    \emph{There is a large difference between the statistics over junctions
+    having 3 and 4 roads}, because they have different load.  The lesson to
+    take from this is that for precise measurements, they should not be mixed.
+    So, in most following checks, I chose to concentrate on junctions with 4
+    roads (we wanted higher loads after all).
+    
+  \begin{table}
+    \begin{center}
+      \input{main34.tex}
+      \caption{Comparison of junctions with 3 and 4 roads, averaged over
+        plans, selected parameters: \txt{hold2}, \txt{fix}, \txt{lru}}
+      \label{tab-main34}
+    \end{center}
+  \end{table}
+
+  \begin{table}
+    \begin{center}
+      \input{mainplans3.tex}
+      \caption{Comparison of the 3 plans, selected parameters: \txt{hold2},
+        \txt{fix}, \txt{lru}, \txt{3} roads}
+      \label{tab-mainplans3}
+    \end{center}
+  \end{table}
+
+  \begin{table}
+    \begin{center}
+      \input{mainplans4.tex}
+      \caption{Comparison of the 3 plans, selected parameters: \txt{hold2},
+        \txt{fix}, \txt{lru}, \txt{4} roads}
+      \label{tab-mainplans4}
+    \end{center}
+  \end{table}
+
+  \conc Now let's check the dependence on a specific plan.  Tables
+    \vrefrange{tab-mainplans3}{tab-mainplans4} compares the 3 city plans, for
+    junctions with 3 and 4 roads respectively (in this case the results were
+    interesting enough to include both of them).  There are definite and quite
+    systematic differences.
+
+    For 3 roads (all loads) or 4 with the lower load of 0.15, the ordering of
+    delays A $>$ B $>$ C is observed without exception.  Interestingly, in all
+    cases but one B has the highest deviation.  But now \emph{there is a
+    breaking point on the \textsl{load\x{}number-of-roads} scale} at which
+    the relation between the city plans changes.
+
+    For 4 roads with the higher loads 0.20 and 0.23, the trend changes.  B has
+    the highest delay with no exceptions; it also has the highest deviation
+    except for one case.  A and C are quite close except for the blind case
+    which has really big delays and differences; there doesn't seem to be a
+    definitive ordering between them.
+
+    The question is, what properties of a city plan make it have overall
+    higher or lower average/deviation?  I must admit I found no good answer to
+    this.  I counted the components --- sources/drains, long roads, junctions
+    with 3/4 roads and total junctions --- of the city plans:
+    \begin{center}
+      \begin{tabular}{c||r|r|r|r|r|r}
+          & 0 & 1  & 2  & 3  & 4  & 3+4 \\
+        \hline \hline
+        A & 3 & 16 & 73 & 96 & 37 & 133 \\
+        \hline
+        B & 3 & 30 & 78 & 76 & 38 & 114 \\
+        \hline
+        C & 9 & 21 & 68 & 89 & 38 & 127 \\
+      \end{tabular}
+    \end{center}
+    None of these seems to explain directly the A $>$ B $>$ C ordering
+    observed for lower loads.  However one thing does stand out: B has the
+    highest number of sources/drains and highest number of road continuations,
+    at the expense of junctions.  How can this explain B's deviation being the
+    highest?  The more sources/drains, the shorter is the average car's
+    presence in the city --- but this shouldn't matter directly because
+    measurements are per queue.  Another difference is that incoming car
+    streams have less autocorrelation (our sources emit white noise).\footnote
+    {Recall that these tables are for switching speed of once in 2 cycles,
+    which imposes at least some autocorrelation on the streams of cars emitted
+    by junctions.}  Road lengths shouldn't have direct effect on the control
+    policies described.  So, without proof, I can \emph{guess: cars randomly
+    entering/leaving the roads lower the autocorrelation of the car streams in
+    the system which has adverse effect on the deviations}.\footnote
+    {Prediction: ``platoon dispersion'' on real-life roads probably has
+    similar effect.}
+
+    In the face of these differences between cities, to what extent can we
+    trust other information extracted from the data?  First, can we bound the
+    differences due to the plan?  No, not tightly enough.  The differences in
+    many cases are as high as one third!  However, we are saved by the fact
+    that, as can be seen from the tables, the relations between different
+    parameters are very similar for all three city plans.  So while
+    \emph{absolute results for given cities are not representative, relative
+    results are probably reliable}.  From now on I will average results
+    between the 3 plans.
+
+  \begin{sidewaystable}
+    \begin{center}
+      \input{mainflex.tex}
+      \caption{Comparison of switching speeds, fixed and flexible, selected
+        parameters: \txt{0.20} load, \txt{lru}, \txt{4} roads, averaged over
+        plans.  Note that \txt{flex} with \txt{blind} makes no sense (it would
+        be stuck on one queue indefinitely).}
+      \label{tab-mainflex}
+    \end{center}
+  \end{sidewaystable}
+
+  \conc Now, let's consider the effects of different switching speeds, both
+    fixed and flexible.  Table \vref{tab-mainflex} shows them for one load
+    (0.20), with LRU tie resolving.  The first thing to see is that for most
+    cases, flex gives lower times (by up to $\approx 20\%$).  This makes
+    sense.  The average delay should only depend on the frequency of serving
+    empty queues.  For any non-blind policy with fixed switching rate $k$,
+    this can only happen on cycles $2\ldots k$ out of every $k$ cycles.  For a
+    flexible switching rate, if the period of serving a queue is prolonged by
+    $l$ cycles, a non-empty queue can be served again only on cycles $2\ldots
+    k$ out of the $k+l$ cycles.  So \emph{flexibly prolonging green time when
+    the queue still has cars lowers the average delay by lowering the
+    opportunity of serving empty queues}.  The same can be expected of flexibly
+    shortening the serving time.  Indeed, this is observed: the average delays
+    drops with the reduction of the minimal green time.  However, \emph{with
+    no minimal green time limit (\txt{free}), trying to prolong the green time
+    is not efficient}~--- \txt{fix} gives lower delay than \txt{flex}.  I
+    don't know why exactly this happens --- for \txt{free} empty queues are
+    never served so the delay depends only on complex second-order timing
+    interactions between junctions\ldots\footnote {By these I mean the
+    correlations between car arrivals from different directions to the same
+    junction; understanding them falls beyond the scope of this project.}
+
+    Another effect is that \txt{flex} results in higher deviations.  This is
+    expected --- it serves the same queue longer, making other queues wait
+    more.
+
+  \begin{sidewaystable}
+    \begin{center}
+      \input{mainwisdoms.tex}
+      \caption{Comparison of control policies for different loads, selected
+        parameters: \txt{fix}, \txt{lru}, \txt{4} roads, averaged over plans.}
+      \label{tab-mainwisdoms}
+    \end{center}
+  \end{sidewaystable}
+
+  \conc Finally, table \vref{tab-mainwisdoms} compares the different control
+    policies, for different loads and switching rates.  The results are
+    similar to the ones from the first (reaction speed) runs; I won't repeat
+    all the previous conclusions here.  The main difference is that higher
+    loads were used, so the results are more fluctuating.  In particular, even
+    for \txt{free} the results are noticeable (but not critical) differences
+    between the non-blind policies.  This can be attributed to second-order
+    interactions.
+
+    We see that \emph{with the increase of load, the differences between the
+    policies don't seem to become smaller}.  In particular, \txt{blind}
+    remains very ineffective.  This was unexpected --- I would think that when
+    most queues are full, a blind junction ``has no choice'' but to be
+    effective too \smiley.  Probably the loads are still not high enough ---
+    with the smart policies, cars wait up to 4 cycles on average, which means
+    1-2 cars per queue in steady state\ldots
+
+    We see that \emph{with stronger limits on the switching rate, all policies
+    become more similar}.  This is expected --- none of them is can predict
+    the future very well so they all are more or less blind with respect to
+    it.
+
+    Again, the differences between \txt{hist} and \txt{longest} are very small
+    and unsystematic; considering the fluctuations in the results, there is no
+    statically meaningful difference between them.  Under the conditions of
+    these simulations, \emph{measuring the incoming load of each queue doesn't
+    prove useful} (or maybe the information wasn't put to good use).
+
+    Continuing the trend from the first runs, \txt{inorder} lags behind them
+    and its delay isn't different from \txt{nonempty}.  Serving in order of
+    arrival doesn't improve the delay, except under the smallest load.  However
+    it does improve the deviation better than any other method.  Here is a
+    clear \emph{delay/fairness trade-off}.
+
+    The rest is consistent with the conclusions from the first run.  There are
+    surely points I missed in the analysis and other interesting tables to
+    produce but I have to stop somewhere.  You are invited to mine the results
+    further \winkey.
+    
+\end{itemize}
+
+\section{Bottom lines and future directions}
+
+First, avoid serving empty queues as much as possible.  If you can't switch
+the served queue every cycle (e.g. in real life), choosing the longest queue
+is a good strategy to minimize it.  For very low loads, when several queues
+have equal length, breaking the tie by choosing the one whose front car
+arrived first should be better yet.
+
+Second, flexibly controlling the green time is another way to reduce it.
+Serve a queue as long as it has cars, when it empties, switch to another.  The
+lower the minimum green time limit, the better (unless you are penalized by
+yellow light time).  A limit on maximum green time would be useful if you
+don't want to harm fairness.
+
+Third, always prefer least-recently-used approaches to picking at random.
+This helps both for delay and fairness.  There is some trade-off between delay
+and fairness.  Serving in order of arrival is always most fair\footnote {For
+  \txt{free}, it is a special case of the PGPS weighted fair queuing
+  algorithm, for equal $\phi_i$ weights.}.  However it is not very practical
+since for \txt{hold} it gives suboptimal delay.
+
+There are many ways to continue this work --- it's just the tip of the
+iceberg.  One could perform more research with the current simulator.  In
+particular, the conditions tried were still not representative of real-life
+traffic; higher loads, longer green times, longer roads and yellow lights
+would be interesting to explore.  The role of the city's geometry should be
+explored more; the current Manhattan-like geometry is very arbitrary.
+
+It would be interesting to implement logging/visualization facilities that
+would allow one to track the history of a single car (or a little group) and
+get a feeling of the system's behavior.  This could help to gain intuition for
+second-order effects.
+
+Smarter car routing would be interesting; a simple approach is to choose a
+route like now when a car is created and remove all cycles from it.
+
+Each of the assumptions described at the first chapter can be considered for
+lifting.  Serving multiple queues at once would be most valuable for getting
+closer to reality; unfortunately it will probably severely complicate all
+control policies.
+
+The ultimate goal is probably devising control policies that involve
+communication between junctions.
+
+Use your imagination to continue this list\ldots
+
+
+
+% \appendix
+
+% \chapter{Source code}
+
+%Documentation extracted from comments is also available in HTML format
+%separately.  It was extracted using the standard \module{py doc} tools, very
+%slightly tweaked by me to be less verbose.
+
+%For running you will also need the \module{sets} library from the Python 2.3
+%distribution.
+
+%\PythonInput{basic.py}
+%\PythonInput{city.py}
+%\PythonInput{connect.py}
+%\PythonInput{mktable.py}
+%\PythonInput{multi.py}
+%\PythonInput{run.py}
+%\PythonInput{simtime.py}
+%\PythonInput{textgrid.py}
+%\PythonInput{utils.py}
+
+\end{document}

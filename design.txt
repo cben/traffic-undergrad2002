@@ -1,0 +1,32 @@
+* Discrete time.
+  - Rationale: easier to simulate, suits typical control structures,
+    easier to analyze (e.g. representing that on green light 1 car is
+    served per "second"...)
+* Low traffic density - far from saturation:
+  - Roads have constant(?) delay (might vary but load-independent).
+  - Each road ends with an infinite queue.
+  - In other words we do *not* anylyze jams.
+  - Rationale: while most real-life systems are more interested in
+    high density (most traffic is during peak hours), low density
+    should make the effectiveness of the control more clearly observable.
+* No yellow lights.  Switching has no overhead.
+  - Light cycle length will be dictated by the desire to coordiante
+    intersections (impossible if travel time >> cycle length).
+* At first perfect imformation about cars will be assumed to be availiable.
+  - Each car decides what it's route will be when it's created and
+    follows it.  Maybe this is too strong and probabilistic turning
+    with known probabilities will be used.
+  - Rationale: the tasks of selecting good locations/types for the sensors
+    and of estimating the situation on the roads from their outputs,
+    is interesting but separate from the design of the control.
+  - Common sense care should be taking not to design control
+    architectures that are inherently sensitive to the precision of
+    the road data (e.g. full combinatoric searches).
+  - If time will allow the degradation of effectiveness with the
+    decrease in information can be researched.
+* Intersections, traffic ligths:
+  - The simulator should allow almost anything for research benefit.
+  - For simplicity, only one queue will be served at a time (not
+    counting uncontrolled turnings, e.g. right turns).  For example
+    lights that allow simultaneos strait and left from same road are
+    OK (and realistic).
