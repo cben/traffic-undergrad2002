@@ -1,0 +1,5 @@
+set terminal postscript color
+set data style lines
+set output 'react_0.20-longest-dev.ps'
+set title 'react_0.20-longest-dev'
+plot 'react_0.20-longest_5x5-dev.dat', 'react_0.20-longest_15x15-dev.dat', 'react_0.20-longest_10x10-dev.dat'
